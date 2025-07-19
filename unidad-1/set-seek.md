@@ -15,7 +15,7 @@ ser diferente y emocionante.
 ### Actividad 03: Caminatas aleatorias
 #### Modifica el código del ejemplo Example 0.1: A Traditional Random Walk.
 Voy a cambiar las probibilidades para que el movimiento del punto deje de ser uniforme y se vuelva no uniforme, voy a aumentar las probabilidades del movimiento en x
-´´´
+```
 // The Nature of Code
 // Daniel Shiffman
 // http://natureofcode.com
@@ -64,7 +64,7 @@ class Walker {
 
 
 
-´´´
+```
 
 #### Antes de ejecutar el código, escribe en tu bitácora qué esperas que suceda.
 Espero que se pinte en forma de cuadrado, se quede en el centro y no varie mucho en ninguna de las direcciones pero su posicion horizontal cambia mas que la vertical, tambien espero que el cuadrado se vuelva mas grande y cambia de color en base a la posicion del mouse debido a stroke(mouseX, mouseY, random(256)); y strokeWeight(5)
@@ -79,7 +79,58 @@ Los cuadros cambian de tono aleatoriamente y su color cambia en base a la posici
 #### Ocurrió lo que esperabas? ¿Por qué crees que sí o por qué crees que no?
 Si ocurrió lo que esperaba en cuanto al movimiento del cuadrado ya que tienen mas probabilidad de moverse en X que en Y y se mantienen en el centro ya que la probabilidad de aumentar y disminuir es igual tanto en X como en Y
 
+### Actividad 04: Distribuciones de probabilidad
+#### En tus propias palabras cuál es la diferencia entre una distribución uniforme y una no uniforme de números aleatorios.
+Una distribución uniforme es esa en la que cualquier valor posible tiene las mismas posibilidades de suceder como al tirar un dado.
+#####
+En una distribución no uniforme no todos lo valores tienen la misma probabilidad como en la distribución gaussiana en la que es más probable que salga un valor cercano a la media.
+#### Modifica el código de la caminata aleatoria para que utilice una distribución no uniforme, favoreciendo el movimiento hacia la derecha.
+Afortunadamente el experimento que hice fué muy similar a esto, solo hay que hacer que aumentar en X suceda con 3 valores posibles y dejando el resto en solo 1.
 
+```
+// The Nature of Code
+// Daniel Shiffman
+// http://natureofcode.com
 
+let walker;
+
+function setup() {
+  createCanvas(640, 240);
+  walker = new Walker();
+  background(255);
+}
+
+function draw() {
+  walker.step();
+  walker.show();
+}
+
+class Walker {
+  constructor() {
+    this.x = width / 2;
+    this.y = height / 2;
+  }
+
+  show() {
+    stroke(0);
+    point(this.x, this.y);
+  }
+
+  step() {
+    const choice = floor(random(6));
+    if (choice == 0 || choice == 3 || choice ==4) { // No tienen que ser 3 necesariamente, puede ser 2 o mas
+      this.x++;
+    } else if (choice == 1) {
+      this.x--;
+    } else if (choice == 2) {
+      this.y++;
+    } else {
+      this.y--;
+    }
+  }
+}
+
+```
+<img width="364" height="180" alt="image" src="https://github.com/user-attachments/assets/a25f78e2-65b5-4fc5-80db-f4d85c393ec0" />
 
 
