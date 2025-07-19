@@ -155,6 +155,8 @@ A medida que el programa corre, la mayoría de los circulos tienen tamaños simi
 El perimetro de los circulos tambien cambia de color en base a la posición del mouse pero esto no tiene nada que ver con la distribución normal.
 ##### Enlace: https://editor.p5js.org/JuanSMarin2/sketches/BQWxw2T0d
 <img width="332" height="344" alt="image" src="https://github.com/user-attachments/assets/9cb625f3-db6c-4d4f-ba0a-5a959a6b9e3c" />
+<img width="236" height="256" alt="image" src="https://github.com/user-attachments/assets/16c002d3-83b6-4afb-bd58-2966dc48fd11" />
+
 
 ### Actividad 06: Distribución personalizada: Lévy flight
 #### Crea un nuevo sketch en p5.js donde modifiques uno de los ejemplos anteriores y adiciones de Lévy flight.
@@ -232,4 +234,43 @@ Debido a que el programa original no variaba mucho de moviemiento y se quedaba m
 #### Ocurrió lo que esperabas? ¿Por qué crees que sí o por qué crees que no?
 De cierta manera sí, pero esperaba que fuera más variado y no terminara generando grupos separados de elementos.
 <img width="379" height="238" alt="image" src="https://github.com/user-attachments/assets/770d1f91-2191-4f56-943c-c7a126c03950" />
+##### Enlace: https://editor.p5js.org/JuanSMarin2/sketches/EQX1YkSVW
+### Actividad 07: Ruido Perlin
+#### Una vez has entendido el concepto de ruido Perlin, vas a pensar en una nueva manera de visualizarlo.
+
+```
+let tx;
+let ty;
+
+function setup() {
+  createCanvas(500, 500);
+    background(200);
+  tx = 0;
+  ty = 1000; 
+}
+
+function draw() {
+
+
+ 
+  let x = noise(tx) * width;
+  let y = noise(ty) * height;
+
+  strokeWeight(5);
+  point(x, y);
+
+  tx += 0.01;
+  ty += 0.01;
+}
+function mouseClicked() {
+   background(200);
+}
+
+```
+
+#### Explica el concepto qué resultados esberabas obtener. 
+Hice algo similar al ejemplo de la actividad 2 pero espero que gracias al metodo noise la trayectoria sea mucho más limpia, tambien hice que al hacer clic el trazo se borre
+<img width="469" height="447" alt="image" src="https://github.com/user-attachments/assets/2cc9eee5-bc7e-4d1e-b33d-16cf3b2a5b8a" />
+El movimiento sigue siendo aleatorio pero ya es mucho menos herratico, ya se ve mas ordenado y redondeado, parece un trazo de lapiz en vez de puntos aleatorios
+##### Enlace: https://editor.p5js.org/JuanSMarin2/sketches/bD7GX_TgB
 
