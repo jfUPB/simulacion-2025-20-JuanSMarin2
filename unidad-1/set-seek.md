@@ -133,4 +133,103 @@ class Walker {
 ```
 <img width="364" height="180" alt="image" src="https://github.com/user-attachments/assets/a25f78e2-65b5-4fc5-80db-f4d85c393ec0" />
 
+### Actividad 05: Distribución Normal
+#### Una vez has entendido el concepto de distribución normal, vas a pensar en una nueva manera de visualizarlo.
+```
+function setup() {
+  createCanvas(400, 400);
+    background(220);
+}
+
+function draw() {
+
+       var mean = 10;
+      var std = 30;
+  circle(200,200 ,randomGaussian(mean,std) )
+  
+  stroke(mouseX,mouseY,random(255))
+}
+```
+A medida que el programa corre, la mayoría de los circulos tienen tamaños similares ya que los valores aleatorios se concentran cerca de la media. Solo en raras ocasiones aparecen círculos más grandes o más pequeños, lo que no ocurre con una distribución uniforme. 
+#####
+El perimetro de los circulos tambien cambia de color en base a la posición del mouse pero esto no tiene nada que ver con la distribución normal.
+##### Enlace: https://editor.p5js.org/JuanSMarin2/sketches/BQWxw2T0d
+<img width="332" height="344" alt="image" src="https://github.com/user-attachments/assets/9cb625f3-db6c-4d4f-ba0a-5a959a6b9e3c" />
+
+### Actividad 06: Distribución personalizada: Lévy flight
+#### Crea un nuevo sketch en p5.js donde modifiques uno de los ejemplos anteriores y adiciones de Lévy flight.
+Modifiqué el ejercicio de la actividad 03
+```
+// The Nature of Code
+// Daniel Shiffman
+// http://natureofcode.com
+
+let walker;
+
+function setup() {
+  createCanvas(640, 240);
+  walker = new Walker();
+  background(255);
+}
+
+function draw() {
+  walker.step();
+  walker.show();
+}
+
+class Walker {
+  constructor() {
+    this.x = width / 2;
+    this.y = height / 2;
+
+  }
+
+  show() {
+    stroke(mouseX, mouseY, random(256));
+    
+    strokeWeight(5)
+    square(this.x, this.y, 10);
+    
+  }
+
+  step() {
+    const choice = floor(random(8));
+    const jump = random(1);
+    var amount;
+    
+    if(jump > 0.01){
+      amount = 1;
+    } 
+    else
+    {
+      amount = 50;
+    }
+    
+    if (choice == 0 || choice == 5 || choice == 6) {
+            this.x += amount;
+  
+    } else if (choice == 1 || choice == 3 || choice == 4) {
+      this.x -= amount;
+      
+    } else if (choice == 2) {
+      this.y += amount;
+    } else {
+      this.y -= amount;
+    }
+  }
+}
+
+
+```
+#### Antes de ejecutar el código, escribe en tu bitácora qué esperas que suceda.
+Espero que los cuadrados se muevan igual que antes pero cada cierto tiempo saltan a otra posición cercana.
+
+#### Ejecuta el código y escribe en tu bitácora qué sucedió realmente.
+
+<img width="311" height="218" alt="image" src="https://github.com/user-attachments/assets/f5fd6cbd-d5ef-4604-84a8-28df79ece686" />
+Debido a que el programa original no variaba mucho de moviemiento y se quedaba mucho en un punto, despues de un tiempo quedan grupos de cuadros que no suelen chocar entre si, tambien tiene mayor probabilidad de hacer un salto en X que en Y
+
+#### Ocurrió lo que esperabas? ¿Por qué crees que sí o por qué crees que no?
+De cierta manera sí, pero esperaba que fuera más variado y no terminara generando grupos separados de elementos.
+<img width="379" height="238" alt="image" src="https://github.com/user-attachments/assets/770d1f91-2191-4f56-943c-c7a126c03950" />
 
