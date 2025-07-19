@@ -10,8 +10,8 @@ Permite variabilidad haciendo que la pieza de arte sea diferente cada vez que se
 #### Cuál es el papel de la aleatoriedad en su obra.
 Se encarga de potenciar la metafora de la naturaleza aleatoria de la vida, no hay patron ni onda en la obra que se genere exactamente igual asi como en la realidad no hay dos arboles que crezcan iguales.
 #### Según tu perfil profesional, cómo se aplica el concepto de aleatoriedad en el tipo de proyectos que desarrollas. Ilustra tu respuesta con ejemplos concretos.
-En el desarrollo de videojuegos la aletoriedad la aletoriedad sirve para generar experiencias diferentes, podria usarla que un juego finito se vuelva infinito como con generación de un terreno procedural o generando emoción o tensión en el jugador dependiendo de su suerte como al hacer un golpe critico en RPG. Sin aletoriedad cada partida seria linear y exactamente igual si se toman las mismas desiciones, con la aletoriedad cada partida puede 
-ser diferente y emocionante.
+En el desarrollo de videojuegos la aletoriedad sirve para generar experiencias diferentes, podria usarla para que un juego finito se vuelva infinito como con generación de un terreno procedural o generando emoción o tensión en el jugador dependiendo de su suerte como al hacer un golpe critico en RPG. Sin aletoriedad cada partida seria linear y exactamente igual si se toman las mismas desiciones, con la aletoriedad cada partida puede 
+ser unica y emocionante.
 ### Actividad 03: Caminatas aleatorias
 #### Modifica el código del ejemplo Example 0.1: A Traditional Random Walk.
 Voy a cambiar las probibilidades para que el movimiento del punto deje de ser uniforme y se vuelva no uniforme, voy a aumentar las probabilidades del movimiento en x
@@ -229,6 +229,7 @@ Espero que los cuadrados se muevan igual que antes pero cada cierto tiempo salta
 #### Ejecuta el código y escribe en tu bitácora qué sucedió realmente.
 
 <img width="311" height="218" alt="image" src="https://github.com/user-attachments/assets/f5fd6cbd-d5ef-4604-84a8-28df79ece686" />
+
 Debido a que el programa original no variaba mucho de moviemiento y se quedaba mucho en un punto, despues de un tiempo quedan grupos de cuadros que no suelen chocar entre si, tambien tiene mayor probabilidad de hacer un salto en X que en Y
 
 #### Ocurrió lo que esperabas? ¿Por qué crees que sí o por qué crees que no?
@@ -270,7 +271,9 @@ function mouseClicked() {
 
 #### Explica el concepto qué resultados esberabas obtener. 
 Hice algo similar al ejemplo de la actividad 2 pero espero que gracias al metodo noise la trayectoria sea mucho más limpia, tambien hice que al hacer clic el trazo se borre
+ ##### 
 <img width="469" height="447" alt="image" src="https://github.com/user-attachments/assets/2cc9eee5-bc7e-4d1e-b33d-16cf3b2a5b8a" />
+
 El movimiento sigue siendo aleatorio pero ya es mucho menos herratico, ya se ve mas ordenado y redondeado, parece un trazo de lapiz en vez de puntos aleatorios
 ##### Enlace: https://editor.p5js.org/JuanSMarin2/sketches/bD7GX_TgB
 
