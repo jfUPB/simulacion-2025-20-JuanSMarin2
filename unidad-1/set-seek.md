@@ -15,7 +15,8 @@ ser unica y emocionante.
 ### Actividad 03: Caminatas aleatorias
 #### Modifica el código del ejemplo Example 0.1: A Traditional Random Walk.
 Voy a cambiar las probibilidades para que el movimiento del punto deje de ser uniforme y se vuelva no uniforme, voy a aumentar las probabilidades del movimiento en x
-```
+
+``` js
 // The Nature of Code
 // Daniel Shiffman
 // http://natureofcode.com
@@ -87,7 +88,7 @@ En una distribución no uniforme no todos lo valores tienen la misma probabilida
 #### Modifica el código de la caminata aleatoria para que utilice una distribución no uniforme, favoreciendo el movimiento hacia la derecha.
 Afortunadamente el experimento que hice fué muy similar a esto, solo hay que hacer que aumentar en X suceda con 3 valores posibles y dejando el resto en solo 1.
 
-```
+``` js
 // The Nature of Code
 // Daniel Shiffman
 // http://natureofcode.com
@@ -135,7 +136,8 @@ class Walker {
 
 ### Actividad 05: Distribución Normal
 #### Una vez has entendido el concepto de distribución normal, vas a pensar en una nueva manera de visualizarlo.
-```
+
+``` js
 function setup() {
   createCanvas(400, 400);
     background(220);
@@ -161,7 +163,8 @@ El perimetro de los circulos tambien cambia de color en base a la posición del 
 ### Actividad 06: Distribución personalizada: Lévy flight
 #### Crea un nuevo sketch en p5.js donde modifiques uno de los ejemplos anteriores y adiciones de Lévy flight.
 Modifiqué el ejercicio de la actividad 03
-```
+
+``` js
 // The Nature of Code
 // Daniel Shiffman
 // http://natureofcode.com
@@ -221,8 +224,8 @@ class Walker {
   }
 }
 
-
 ```
+
 #### Antes de ejecutar el código, escribe en tu bitácora qué esperas que suceda.
 Espero que los cuadrados se muevan igual que antes pero cada cierto tiempo saltan a otra posición cercana.
 
@@ -239,7 +242,7 @@ De cierta manera sí, pero esperaba que fuera más variado y no terminara genera
 ### Actividad 07: Ruido Perlin
 #### Una vez has entendido el concepto de ruido Perlin, vas a pensar en una nueva manera de visualizarlo.
 
-```
+``` js
 let tx;
 let ty;
 
