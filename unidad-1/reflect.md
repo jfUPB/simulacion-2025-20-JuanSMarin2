@@ -18,7 +18,7 @@ Utilice la probabilidad no uniforme para que el walker tenga mas probabilidad de
 Es un programa en el que un objeto tiene una probabilidad de moverse ciertas unidades a una de las direcciones dando la ilución de que esta desplazandose. 
 La caminata Lévy flight es aquella en la que con una probabilidad mas baja puede moverse muchas mas unidades a una dirección pareciendo que hizo un salto.
 #####
-Parte 2
+#### Parte 2
 #####
 #### ¿Cuál fue el concepto más abstracto o difícil de “visualizar” para ti en esta unidad? ¿Qué hiciste para finalmente comprenderlo?
 El concepto mas complejo fue naturalmente el del ruido perlin al ser el mas complejo. Tuve problemas para entender que hacia exactamente el metodo noise, que devolvia y que hacian exactamente los parametros que se le pasaban, para entenderlo tuve que ver un video y preguntarle a chat gpt para poder entenderlo.
@@ -28,3 +28,8 @@ Debido a los Levy Flight era muy probable que el walker se saliera lejos de la p
 Fue complejo aplicar el cambio de probabilidad en base a la direccion, tuve que buscar metodos predefinidos y varias variables booleansa para lograrlo.
 #### Si tuvieras que empezar la Actividad 08 de nuevo, ¿Qué harías de manera diferente basándote en lo que sabes ahora?
 Creo que llegaria al mismo resultado pero daria menos vueltas y empezaria sabiendo como aplicarlo exactamente
+### Actividad 10: Coevaluación
+#### Intercambien las URLs de sus bitácoras de aprendizaje: https://editor.p5js.org/JuanJAreiza/sketches/1BesSufHm
+
+##### Basándote en la rúbrica para la actividad 08 evalúa el trabajo del compañero y escribe un comentario de retroalimentación constructiva. Esto lo harás en tu bitácora de aprendizaje.
+Me gusta mucho como aplico los conceptos para generar los trazos con movimiento aleatorio pero limpio gracias al ruido perlin, tambien me parece adecuado el uso de interactividad con el cambio de paletas de colores y borrando el trazo. Lo único es que no se llega a apreciar del todo el uso la distribución Gaussiana porque casi no se alcanzan a ver los trazos de tamaño diferente
