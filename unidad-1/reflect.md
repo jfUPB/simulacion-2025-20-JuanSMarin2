@@ -2,6 +2,9 @@
 
 ## 🤔 Fase: Reflect
 ### Actividad 09: Autoevaluación
+#####
+### Parte 1
+#####
 #### Describe la diferencia fundamental entre la aleatoriedad generada por random() y la apariencia de aleatoriedad del Ruido Perlin (noise()). ¿En qué tipo de situación usarías cada una?
 Random genera un número aleatorio entre el rango ingresado, sirve para generar una probabilidad uniforme. La función noise genera numeros dependientes del numero que ha sacado anteriormente en base al parametro ingresado para que la aletoriedad sea no uniforme y simular el ruido perlin
 #### Explica con tus palabras qué es una distribución de probabilidad. ¿Qué diferencia visual produce una caminata aleatoria con una distribución uniforme versus una con una distribución normal? 
@@ -14,4 +17,14 @@ Utilice la probabilidad no uniforme para que el walker tenga mas probabilidad de
 #### ¿Qué es un “paseo” o “caminata” (walk) en el contexto de la simulación? ¿Qué característica particular tiene una caminata de tipo “Lévy flight”?
 Es un programa en el que un objeto tiene una probabilidad de moverse ciertas unidades a una de las direcciones dando la ilución de que esta desplazandose. 
 La caminata Lévy flight es aquella en la que con una probabilidad mas baja puede moverse muchas mas unidades a una dirección pareciendo que hizo un salto.
-
+#####
+Parte 2
+#####
+#### ¿Cuál fue el concepto más abstracto o difícil de “visualizar” para ti en esta unidad? ¿Qué hiciste para finalmente comprenderlo?
+El concepto mas complejo fue naturalmente el del ruido perlin al ser el mas complejo. Tuve problemas para entender que hacia exactamente el metodo noise, que devolvia y que hacian exactamente los parametros que se le pasaban, para entenderlo tuve que ver un video y preguntarle a chat gpt para poder entenderlo.
+#### Describe un momento durante el desarrollo de tu obra final (Actividad 08) en el que un “error” o un resultado inesperado te llevó a una idea creativa interesante.
+Debido a los Levy Flight era muy probable que el walker se saliera lejos de la pantalla por lo que hice que al hacer click se pudiera "reiniciar" el programa borrando todo el trazo y devolviendo el walker al centro.
+#### Al combinar diferentes técnicas de aleatoriedad, ¿Cuál fue el mayor desafío? ¿La interacción entre los sistemas, el control de los parámetros, el rendimiento?
+Fue complejo aplicar el cambio de probabilidad en base a la direccion, tuve que buscar metodos predefinidos y varias variables booleansa para lograrlo.
+#### Si tuvieras que empezar la Actividad 08 de nuevo, ¿Qué harías de manera diferente basándote en lo que sabes ahora?
+Creo que llegaria al mismo resultado pero daria menos vueltas y empezaria sabiendo como aplicarlo exactamente
