@@ -18,7 +18,7 @@ Utilice la probabilidad no uniforme para que el walker tenga mas probabilidad de
 Es un programa en el que un objeto tiene una probabilidad de moverse ciertas unidades a una de las direcciones dando la ilución de que esta desplazandose. 
 La caminata Lévy flight es aquella en la que con una probabilidad mas baja puede moverse muchas mas unidades a una dirección pareciendo que hizo un salto.
 #####
-#### Parte 2
+### Parte 2
 #####
 #### ¿Cuál fue el concepto más abstracto o difícil de “visualizar” para ti en esta unidad? ¿Qué hiciste para finalmente comprenderlo?
 El concepto mas complejo fue naturalmente el del ruido perlin al ser el mas complejo. Tuve problemas para entender que hacia exactamente el metodo noise, que devolvia y que hacian exactamente los parametros que se le pasaban, para entenderlo tuve que ver un video y preguntarle a chat gpt para poder entenderlo.
@@ -31,5 +31,14 @@ Creo que llegaria al mismo resultado pero daria menos vueltas y empezaria sabien
 ### Actividad 10: Coevaluación
 #### Intercambien las URLs de sus bitácoras de aprendizaje: https://editor.p5js.org/JuanJAreiza/sketches/1BesSufHm
 
-##### Basándote en la rúbrica para la actividad 08 evalúa el trabajo del compañero y escribe un comentario de retroalimentación constructiva. Esto lo harás en tu bitácora de aprendizaje.
-Me gusta mucho como aplico los conceptos para generar los trazos con movimiento aleatorio pero limpio gracias al ruido perlin, tambien me parece adecuado el uso de interactividad con el cambio de paletas de colores y borrando el trazo. Lo único es que no se llega a apreciar del todo el uso la distribución Gaussiana porque casi no se alcanzan a ver los trazos de tamaño diferente
+#### Basándote en la rúbrica para la actividad 08 evalúa el trabajo del compañero y escribe un comentario de retroalimentación constructiva. Esto lo harás en tu bitácora de aprendizaje.
+Me gusta mucho como aplico los conceptos para generar los trazos con movimiento aleatorio pero limpio gracias al ruido perlin, tambien me parece adecuado el uso de interactividad con el cambio de paletas de colores y borrando el trazo. Lo único es que no se llega a apreciar del todo el uso la distribución Gaussiana porque casi no se alcanzan a ver los trazos de tamaño diferente.
+### Actividad 11: Feedback
+#### Continuar: ¿Qué actividad, ejemplo o explicación de esta unidad te resultó más reveladora o útil para tu aprendizaje? ¿Qué deberíamos mantener sí o sí?
+Todos los conceptos me gustaron y me parece que todos deberian conservarse, me parece que tienen su utilidad y la curva de dificultad de aprendizaje en la manera en la que esta me parece perfecta.
+El concepto de ruido perlin me parecio el mas util y el que tiene mas potencial de crear cosas muy interesantes.
+#### Empezar a hacer: ¿Qué te faltó en esta unidad? ¿Quizás más ejemplos de artistas, más desafíos técnicos, más teoría? ¿Qué idea tienes para hacerla mejor?
+Me parece que el concepto de ruido perlin necesita mas explicación en la propia bitacora, pienso que el libro explica bien el concepto y su utilidad pero no se explica bien la forma de aplicarlo ni como funciona bien la funcion noise.
+#### Balance Teoría-Práctica: ¿Cómo sentiste el equilibrio entre analizar los ejemplos del texto guía y ponerte a programar tus propios sketches? Explica tu respuesta.
+Me parecio muy adecuado y muy dinamico, me gusta como los ejemplos muestran bien a detalle como aplicar lo explicado y los conceptos no eran distantes, podian usarse para ampliar los ejemplos anteriores.
+
