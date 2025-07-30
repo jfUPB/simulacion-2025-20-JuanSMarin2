@@ -71,7 +71,8 @@ class Walker {
 
 ```
 <img width="641" height="242" alt="image" src="https://github.com/user-attachments/assets/a8b2f3a3-81ab-4552-b2bf-e389347977a4" />
-#####
+
+
 No tiene que hacerse con velocity pero quise experimentar, no salio un resultado fiel al walker original pero salio algo interesante
 
 ### Actividad 03: Experimenta
@@ -103,10 +104,12 @@ Espero que el programa de devuelva primero en consola la posición del vector qu
 #### ¿Qué resultado obtuviste? 
 
 <img width="370" height="116" alt="image" src="https://github.com/user-attachments/assets/c9dc3a88-7a5f-43f1-b724-e1952dd8dc74" />
-#####
+
+
 El log muestra un vector con 3 o mas parametros por eso el tercer parametro se muestra en 0
 #### Recuerda los conceptos de paso por valor y paso por referencia en programación. Muestra ejemplos de este concepto en javascript.
 ##### Ejemplo paso por valor 
+
 ``` js
 function setup() {
   createCanvas(400, 400);
@@ -123,6 +126,7 @@ function experiment(v) {
  v = 10000000;
 }
 ```
+
 Devuelve 5 porque no se modifico x en si
 #### Ejemplo paso por referencia
 ``` js
