@@ -158,3 +158,58 @@ En este ejemplo se pasa el puntero al vector no el vector en si, los cambios si 
 #### ¿Qué aprendiste?
 Hay que tener cuidado viendo que se esta modificando realmente, hay que saber como funciona el motor o libreria que se esta usando para saber de que tipo de paso hay que usar para obtener lo que se desea.
 
+### Actividad 04: Explora posibilidades
+#### ¿Para qué sirve el método mag()? Nota que hay otro método llamado magSq(). ¿Cuál es la diferencia entre ambos? ¿Cuál es más eficiente?
+Mag sirve para calcular la magnitud de un vector. MagSq calcula la magnitud del vector al cuadrado, esta ultima es mas eficiente ya que da no hay que lidear con la raiz cuadrada
+#### ¿Para qué sirve el método normalize()?
+Sirve para convertir la magnitud de un vector a 1 volviendolo unitario pero conservando su dirección, puede usarse para aplicar una fuerza constante sin importar la distancia original
+#### Te encuentras con un periodista en la calle y te pregunta ¿Para qué sirve el método dot()? ¿Qué le responderías en un frase?
+Calcula el producto punto entre dos vectores, sirve para saber qué tanto dos direcciones apuntan hacia la misma dirección.
+#### Ahora el mismo periodista curioso de antes te pregunta si le puedes dar una intuición geométrica acerca del producto cruz. Entonces te pregunta ¿Cuál es la interpretación geométrica del producto cruz de dos vectores? Tu respuesta debe incluir qué pasa con la orientación y la magnitud del vector resultante.
+El producto cruz da un nuevo vector perpendicular a los dos vectores originales, su dirección depende del orden de los vectores y su tamaño depende del de la superficie entre ellos.
+#### Para que te puede servir el método dist()?
+Sirve para calcular la distancia entre dos puntos
+
+#### ¿Para qué sirven los métodos normalize() y limit()?
+Normalize ya lo mencione previamente, limit limita (valga la redundancia) la magnitud posible de un vector para que no pueda superarlo
+
+
+## Duda extra que me surgio
+
+#### ¿Qué pasa con los componentes de los vectores al aplicar los métodos normalize y limit?
+Con normalize cada componente se divide por la magnitud lo que hace que al sumarse den igual a 1.
+
+Por ejemplo
+``` js 
+let v = createVector(3, 4);
+
+```
+Este vector tiene magnitud: 5 por lo que 
+
+
+<img width="494" height="109" alt="image" src="https://github.com/user-attachments/assets/05a02d32-4321-43b8-bb53-9359b93c4481" />
+
+
+y v.mag ahora devuelve exactamente 1
+
+Limit hace esta misma operación primero y lo multiplica por el limite para que la magnitud de igual al limite
+
+Por ejemplo
+``` js
+et v = createVector(6, 8);
+v.limit(5);
+```
+Como 10 > 5 primero se normaliza 
+
+
+<img width="306" height="66" alt="image" src="https://github.com/user-attachments/assets/677fa429-c4ad-4391-8456-462d71c531b5" />
+
+
+Y luego se multiplica por 5 (El limite)
+
+
+<img width="354" height="46" alt="image" src="https://github.com/user-attachments/assets/2563d098-d154-498f-9831-e49abdbb176d" />
+
+
+Entonces el vector final es (3, 4) con magnitud 5.
+
