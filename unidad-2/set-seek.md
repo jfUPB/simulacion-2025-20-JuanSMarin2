@@ -294,3 +294,18 @@ En base al origen de coordenadar dado por el primer vector, el triangulo se crea
 Es lo que se hacia en la actividad 02. Al vector de posición se le suma el vector de velocidad en cada frame para obtener una nueva dirección. Tambien se le puede sumar la aceleración a la velocidad para que esta varie.
 #### ¿Cómo se aplica motion 101 en el ejemplo?
 Se esta usando en una clase Mover para aplicar el movimiento en una sola linea llamando al metodo update para no tener que aplicar draw y setup y para poder reutilizarlo facilmente.
+
+### Actividad 07: Experimentando con la aceleración
+### Para investigador el significado de esta frase te propone que construyas un experimento donde analices cómo se comporta un objeto en movimiento con:
+
+#### Aceleración constante. 
+
+La velocidad aumenta constantemente llendo cada vez más rápido hasta que casi no alcanza a verse o llega al limite
+
+### Aceleración aleatoria
+
+La velocidad aumenta y disminuye de manera aleatoria, toma mucha velocidad en un punto y despues disminuye.
+
+### Aceleración hacia el mouse.
+La bola se mueve hacia donde se encuentra el mouse, cuando este apunto de chocarse con el mouse empieza a orbitarlo.
+Se hace encontrando la dirección al punto del mouse restando la posición del mouse con la posición de la bola.
