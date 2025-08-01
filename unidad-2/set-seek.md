@@ -213,3 +213,77 @@ Y luego se multiplica por 5 (El limite)
 
 Entonces el vector final es (3, 4) con magnitud 5.
 
+
+### Actividad 05: Interpolamos?
+#### El código que genera el resultado que te pedí.
+``` js
+let movementCalculator;
+let amount;
+
+function setup() {
+    createCanvas(400, 400);
+  movementCalculator = 0.5;
+  amount = 0.01;
+}
+
+function draw() {
+    background(200);
+
+    let v0 = createVector(50, 50);
+    let v1 = createVector(200, 0);
+    let v2 = createVector(0, 200);
+    let v3 = p5.Vector.lerp(v1, v2, movementCalculator);
+    let v4 = createVector(250,50);
+    let v5 = createVector(50,250);
+    let v6 = p5.Vector.sub(v5,v4);
+  
+  let fromColor = 'red';
+  let toColor = 'blue';
+  let v6Color = lerpColor(fromColor,toColor, movementCalculator);
+  
+    drawArrow(v0, v1, 'red');
+    drawArrow(v0, v2, 'blue');
+    drawArrow(v0, v3, v6Color);
+    drawArrow(v4, v6, 'green');
+  
+  
+  
+  if(movementCalculator >= 1 && amount > 0){
+    amount *= -1;
+    
+  }
+  else if(movementCalculator <= 0 && amount < 0){
+    amount *= -1;
+  }
+      movementCalculator += amount;
+   
+}
+
+function drawArrow(base, vec, myColor) {
+    push();
+    stroke(myColor);
+    strokeWeight(3);
+    fill(myColor);
+    translate(base.x, base.y);
+    line(0, 0, vec.x, vec.y);
+    rotate(vec.heading());
+    let arrowSize = 7;
+    translate(vec.mag() - arrowSize, 0);
+    triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
+    pop();
+}
+
+```
+Creo que la parte para calcular la dirección del amount se puede hacer en una sola linea pero asi funciona
+
+#### Link: https://editor.p5js.org/JuanSMarin2/sketches/uINYenqFp
+<img width="398" height="400" alt="image" src="https://github.com/user-attachments/assets/9b0c9415-cc76-46d8-8fa1-a83f567d3761" />
+<img width="424" height="414" alt="image" src="https://github.com/user-attachments/assets/78e23a07-7591-49bf-b381-c00b0dcb6291" />
+
+#### ¿Cómo funciona lerp() y lerpColor().
+Lerp sirve para interpolar un vector en base a dos vectores, es decir, se mueve en la linea que forman los dos vectores en base al tercer parametro.
+
+LerpColor hace lo mismo pero entre dos colores
+
+#### ¿Cómo se dibuja una flecha usando drawArrow()?
+En base al origen de coordenadar dado por el primer vector, el triangulo se crea 7 unidades antes de la punta de la linea y ubica las lineas del triangulo desde los puntos 1. (0, 7/2) 2. (0,-7/2) y 3.(7,0)
