@@ -287,3 +287,10 @@ LerpColor hace lo mismo pero entre dos colores
 
 #### ¿Cómo se dibuja una flecha usando drawArrow()?
 En base al origen de coordenadar dado por el primer vector, el triangulo se crea 7 unidades antes de la punta de la linea y ubica las lineas del triangulo desde los puntos 1. (0, 7/2) 2. (0,-7/2) y 3.(7,0)
+
+
+### Actividad 06: Motion 101
+#### Cuál es el concepto del marco motion 101 y cómo se interpreta geométricamente.
+Es lo que se hacia en la actividad 02. Al vector de posición se le suma el vector de velocidad en cada frame para obtener una nueva dirección. Tambien se le puede sumar la aceleración a la velocidad para que esta varie.
+#### ¿Cómo se aplica motion 101 en el ejemplo?
+Se esta usando en una clase Mover para aplicar el movimiento en una sola linea llamando al metodo update para no tener que aplicar draw y setup y para poder reutilizarlo facilmente.
