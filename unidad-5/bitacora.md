@@ -3,7 +3,7 @@
 
 ## Ejemplo 4.2: an Array of Particles.
 ### Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
-Utilicé la distribución no uniforme para generar diferentes figuras, cada particula puede ser un circulo, cuadrado o triangulo pero tiene mas probabilidades de ser un circulo.
+Utilicé la distribución no uniforme para generar diferentes figuras, cada particula puede ser un circulo, cuadrado o triangulo pero tiene mas probabilidades de ser un circulo. Utilicé random(10) para obtener un valor entre 0 y 9. Siendo que solo los valores 0, 1, 2 activan el cuadrado y 3, 4 el triángulo y el resto activa el círculo, lo que da una mayor probabilidad
 
 ### Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste (aunque es posible que la simulación ya lo haga, trata de identificarlo de nuevo y explicarlo con tus palabras).
 Cuando una particula supera su tiempo de vida es marcada como muerta y el metodo: particles.splice(i, 1); Elimina la particula actual (de la posición i) y solo elimina una. Para experimentar probé cambiando el segundo parametro del metodo, cuando se alcanza el tiempo limite de una particula las 5 particulas subsecuentes a la derecha son eliminadas lo que hace que se borren abruptamente sin llegar a aplicarse el efecto de desbanecerse.
@@ -57,7 +57,7 @@ class Particle {
     this.velocity = createVector(random(-1, 1), random(-1, 0));
     this.lifespan = 255.0;
     
-    const choice = floor(random(8));
+    const choice = floor(random(10));
     
     if(choice <= 2){
       this.isSquare = true;
@@ -123,7 +123,7 @@ class Particle {
 
 ## Ejemplo 4.4: a System of Systems.
 ### Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
-Apliqué la resistencia del aire para reducir la velocidad en la que caen las particulas, hace un efecto interesante ya que las particulas no llegan tan abajo
+Apliqué la resistencia del aire para reducir la velocidad en la que caen las particulas, hace un efecto interesante ya que las particulas no llegan tan abajo. La fuerza de resistencia del aire es una fuerza constante hacia arriba (createVector(0, -0.03)) que contrarresta parcialmente la gravedad (createVector(0, 0.05)).
 
 ### Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste (aunque es posible que la simulación ya lo haga, trata de identificarlo de nuevo y explicarlo con tus palabras).
 La simulación original limita el tiempo de vida de las particulas igual que la anterior pero no limita el numero de emisores por lo que pueden existir demasiadas particulas al mismo tiempo y afectar al rendimiento, añadí un limite de 10 emisores para evitar esto.
@@ -221,5 +221,6 @@ No cambié el codigo de la clase emittor
 <img width="645" height="248" alt="image" src="https://github.com/user-attachments/assets/7b67570e-e418-444f-b822-37b21aa95819" />
 
 ### Link: https://editor.p5js.org/JuanSMarin2/sketches/hnZKSFoqz
+
 
 
