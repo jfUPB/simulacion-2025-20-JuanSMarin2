@@ -224,3 +224,150 @@ No cambié el codigo de la clase emittor
 
 
 
+## Ejemplo 4.5: a Particle System with Inheritance and Polymorphism.
+### Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
+Utilicé la interpolación. Añadí un nuevo tipo de particula llamado Colorling y un nuevo metodo llamado ChooseColor. Las particulas base en ChooseColor escogen su color como una interpolación de los colores de los 2 Colorlings mas cercanos, si no hay ninguno se ponen blancas. Los Colorlings sobre escriben este metodo y escogen su color de forma aleatoria.
+
+### Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste (aunque es posible que la simulación ya lo haga, trata de identificarlo de nuevo y explicarlo con tus palabras).
+La simulación hace lo mismo que las anteriores, aparte de esto algo que no he mencionado es que la opacidad de las particulas disminuye con su tiempo de vida, aprovechando esto aumenté el tiempo de vida de mis colorlings para que no pierdan opacidad mientras estan en pantalla y resalten mas.
+
+``` js
+class Emitter {
+  constructor(x, y) {
+    this.origin = createVector(x, y);
+    this.particles = [];
+  }
+
+  addParticle() {
+    let r = random(1);
+    if (r < 0.4) {
+      this.particles.push(new Particle(this.origin.x, this.origin.y));
+    } else if (r < 0.8) {
+      this.particles.push(new Confetti(this.origin.x, this.origin.y));
+    } else {
+      this.particles.push(new Colorling(this.origin.x, this.origin.y));
+    }
+  }
+
+  run() {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      let p = this.particles[i];
+      p.run(this.particles); 
+      if (p.isDead()) {
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+}
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(random(-1, 1), random(-1, 0));
+    this.lifespan = 255.0;
+    this.col = color(255); 
+  }
+
+  run(particles) {
+    let gravity = createVector(0, 0.05);
+    this.applyForce(gravity);
+    this.update();
+    this.chooseColor(particles); 
+    this.show();
+  }
+
+  applyForce(force) {
+    this.acceleration.add(force);
+  }
+
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+    this.acceleration.mult(0);
+  }
+
+ 
+  chooseColor(particles) {
+    let colorlings = particles.filter(p => p instanceof Colorling);
+
+    if (colorlings.length === 0) {
+      this.col = color(255); 
+      return;
+    }
+
+  
+    colorlings.sort((a, b) =>
+      p5.Vector.dist(this.position, a.position) -
+      p5.Vector.dist(this.position, b.position)
+    );
+
+    if (colorlings.length === 1) {
+      this.col = colorlings[0].myColor;
+    } else {
+      let c1 = colorlings[0].myColor;
+      let c2 = colorlings[1].myColor;
+      this.col = lerpColor(c1, c2, 0.5); 
+    }
+  }
+
+  show() {
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(this.col.levels[0], this.col.levels[1], this.col.levels[2], this.lifespan);
+    circle(this.position.x, this.position.y, 8);
+  }
+
+  isDead() {
+    return this.lifespan < 0.0;
+  }
+}
+class Confetti extends Particle {
+  show() {
+    let angle = map(this.position.x, 0, width, 0, TWO_PI * 2);
+
+    rectMode(CENTER);
+    stroke(0, this.lifespan);
+    strokeWeight(2);
+    fill(this.col.levels[0], this.col.levels[1], this.col.levels[2], this.lifespan);
+
+    push();
+    translate(this.position.x, this.position.y);
+    rotate(angle);
+    square(0, 0, 12);
+    pop();
+  }
+}
+```
+``` js
+
+
+class Colorling extends Particle {
+  constructor(x, y) {
+    super(x, y);
+    this.myColor = color(random(255), random(255), random(255));
+    this.col = this.myColor; 
+    
+    
+     this.lifespan = 500.0;
+  }
+
+  chooseColor(particles) {
+    this.col = this.myColor;
+  }
+
+  show() {
+    stroke(0, this.lifespan);
+    strokeWeight(3);
+    fill(this.col.levels[0], this.col.levels[1], this.col.levels[2], this.lifespan);
+    ellipse(this.position.x, this.position.y, 16);
+  }
+}
+
+
+```
+<img width="303" height="234" alt="image" src="https://github.com/user-attachments/assets/1bd98790-41f0-4561-8674-187e7f7f1ee2" />
+
+### Link: https://editor.p5js.org/JuanSMarin2/sketches/lYpqX6gP9h
+
+
