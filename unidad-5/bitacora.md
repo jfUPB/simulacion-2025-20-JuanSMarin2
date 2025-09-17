@@ -1,6 +1,6 @@
 # Evidencias de la unidad 5
 
-
+# Actividad 02
 ## Ejemplo 4.2: an Array of Particles.
 ### Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
 Utilicé la distribución no uniforme para generar diferentes figuras, cada particula puede ser un circulo, cuadrado o triangulo pero tiene mas probabilidades de ser un circulo. Utilicé random(10) para obtener un valor entre 0 y 9. Siendo que solo los valores 0, 1, 2 activan el cuadrado y 3, 4 el triángulo y el resto activa el círculo, lo que da una mayor probabilidad
@@ -772,5 +772,48 @@ class Repeller {
 <img width="603" height="233" alt="image" src="https://github.com/user-attachments/assets/d7e9c4e5-b78d-4c94-81e8-4f4ca2b770cd" />
 
 ### Link: https://editor.p5js.org/JuanSMarin2/sketches/c1CApjubN
+
+
+
+
+# Apply: Aplicación
+## ¿Qué quiero hacer? - Inspiraciones
+Quiero empezar a representar visualmente la musica, desde el principio del curso cuando dijeron que la ultima actividad seria esto mismo pense en este momento de Deltarune: Capitulo 4
+Link: 
+Quiero tomar esto de inspiracion, siempre me imagine que esas hondas eran parte de la lluvia que caen en un rio, se formaban en el momento en el que las gotas. Quiero que las gotas y las hondas representen notas e instrumentos y que caigan en el momento del sonido. Tambien me inspire en la obra The Awesome Machinery Of Nature: We are all connected de Memo Akten, me gusta como se generan sonidos al momento en el que la bola cae y se genera una honda, como el sonido es una honda tambien y como la complejidad aumenta constantemente tal como naturalmente hace una cancion empezando simple y añadiedo nuevas notas.
+
+Cuando pienso en lluvia, la primera canción que se me viene a la mente es Beneath the mask de Persona 5, me gusta como sonaba en los dias lluviosos de este juego y siempre senti como el sonido de la lluvia fuera como un instrumento mas que aumentaba la cal a que causaba la cancion.
+
+## Diseño
+Quiero hacerlo con una vista top down, en la cancion hay dos tipos de notas, una melodia y otra secundaria que se siente como un campaneo, quiero que las primeras se representen con la aparición de las particulas y las segundas con las hondas que causarian las gotas al agua. Una nota secundaria siempre suena exactamente 4 segundos despues de una principal por lo que este sera el tiempo en el que duraran las particulas en el aire. Estas particulas se podran generar en un lugar aleatorio de la pantalla: 
+<img width="1118" height="776" alt="image" src="https://github.com/user-attachments/assets/75761004-6dd2-46d3-98ba-f8f7de1d90fa" />
+
+Para generar el efecto de caida, la particula se encoje hasta caer, el ratio de reducción de tamaño sera una interpolación entre el maximo y el minimo en el tiempo de duración:
+<img width="939" height="650" alt="image" src="https://github.com/user-attachments/assets/cd45fffb-42de-44dd-a222-705ced14079d" />
+
+En el momento en el que la particula alcanza su tamaño minimo se genera una honda, sera representado por un circulo que se expande lentamente por un segundo hasta desbanecerse limpiamente con un cambio de alpha, en el momento de desbanecimiento se quita a la particula y la honda de sus respectivos arrays.
+
+<img width="937" height="651" alt="image" src="https://github.com/user-attachments/assets/1159334c-a220-4a21-a983-3b084386e7e0" />
+
+La medolia principal tambien se divide en 2 tipos que representare con 2 tipos de particulas distintas, aparte de estas la percución sera una particula triangular y las medolias seran circulares, ya que la medolia se siente mas limpia y circular, en cambio la percusion es mas rigida y triangular.
+
+<img width="937" height="650" alt="image" src="https://github.com/user-attachments/assets/be6bcf5d-9892-4ce8-8552-6fa35c5c7de1" />
+
+Los dos tipos de melodia caen diferente, la melodia 1 se siente mas fluctuante por lo que esta cae en trayectoria de espiral, la melodia 2 es mas limpia por lo que cae en linea recta, representación vertical: 
+
+<img width="933" height="653" alt="image" src="https://github.com/user-attachments/assets/ae97ea93-4311-4050-9f67-84ec4d21df67" />
+
+Para no interrumpir a la melodia, las percusiones solo se generan en una de las 4 esquinas, son un triangulo que apunta al centro de la pantalla, la honda que deja no es circular si no que es rigida como la percusion en si en forma de decagono.
+
+<img width="936" height="650" alt="image" src="https://github.com/user-attachments/assets/11407ec3-4d3e-424f-8375-9429b6306232" />
+
+<img width="913" height="640" alt="image" src="https://github.com/user-attachments/assets/7e55eb0d-85ad-453a-b188-3f84ab5fa924" />
+
+Imagen de como imagino la obra:
+
+<img width="923" height="640" alt="image" src="https://github.com/user-attachments/assets/17ab27e5-f5ed-41cc-a592-d286a437e331" />
+
+
+
 
 
