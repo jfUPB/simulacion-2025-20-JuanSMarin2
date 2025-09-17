@@ -7,7 +7,7 @@ Utilicé la distribución no uniforme para generar diferentes figuras, cada part
 
 ### Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste (aunque es posible que la simulación ya lo haga, trata de identificarlo de nuevo y explicarlo con tus palabras).
 Cuando una particula supera su tiempo de vida es marcada como muerta y el metodo: particles.splice(i, 1); Elimina la particula actual (de la posición i) y solo elimina una. Para experimentar probé cambiando el segundo parametro del metodo, cuando se alcanza el tiempo limite de una particula las 5 particulas subsecuentes a la derecha son eliminadas lo que hace que se borren abruptamente sin llegar a aplicarse el efecto de desbanecerse.
-
+Al borrar partículas con splice, no solo desaparecen visualmente, también cambia el tamaño del arreglo, y eso influye en cómo sigue funcionando el sistema y en el rendimiento de la simulación.
 Splice no libera memoria por sí solo, lo que hace es romper las referencias; el recolector de basura se encarga de limpiar cuando corresponde.
 
 ``` js
@@ -126,7 +126,8 @@ class Particle {
 
 ## Ejemplo 4.4: a System of Systems.
 ### Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
-Apliqué la resistencia del aire para reducir la velocidad en la que caen las particulas, hace un efecto interesante ya que las particulas no llegan tan abajo. La fuerza de resistencia del aire es una fuerza constante hacia arriba (createVector(0, -0.03)) que contrarresta parcialmente la gravedad (createVector(0, 0.05)).
+Apliqué la resistencia del aire para reducir la velocidad en la que caen las particulas, hace un efecto interesante ya que las particulas no llegan tan abajo. Para calcularla, hago que dependa de la velocidad de cada partícula y que siempre actúe en dirección contraria a su movimiento. Esto hace que cuando una partícula cae rápido, la resistencia sea más fuerte, y cuando cae lento casi no se note.
+La resistencia hace que las partículas se acumulen más tiempo en pantalla, y si no limito los emisores, el sistema se llena demasiado. Es decir, la fuerza aplicada se conecta directamente con cuántas partículas puede manejar el sistema sin problemas por eso debo limitar las particulas.
 
 ### Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste (aunque es posible que la simulación ya lo haga, trata de identificarlo de nuevo y explicarlo con tus palabras).
 La simulación original limita el tiempo de vida de las particulas igual que la anterior pero no limita el numero de emisores por lo que pueden existir demasiadas particulas al mismo tiempo y afectar al rendimiento, añadí un limite de 10 emisores para evitar esto.
@@ -167,14 +168,6 @@ function mousePressed() {
 ```
 
 ``` js
-// The Nature of Code
-// Daniel Shiffman
-// http://natureofcode.com
-
-// Simple Particle System
-
-// A simple Particle class
-
 class Particle {
   constructor(x, y) {
     this.position = createVector(x, y);
@@ -185,9 +178,12 @@ class Particle {
 
   run() {
     let gravity = createVector(0, 0.05);
-    let airResistance = createVector(0, -0.03);
     this.applyForce(gravity);
-    this.applyForce(airResistance);
+
+   
+    let drag = this.getAirDrag(0.01); 
+    this.applyForce(drag);
+
     this.update();
     this.show();
   }
@@ -196,7 +192,6 @@ class Particle {
     this.acceleration.add(force);
   }
 
-  // Method to update position
   update() {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
@@ -204,7 +199,6 @@ class Particle {
     this.acceleration.mult(0);
   }
 
-  // Method to display
   show() {
     stroke(0, this.lifespan);
     strokeWeight(2);
@@ -212,11 +206,23 @@ class Particle {
     circle(this.position.x, this.position.y, 8);
   }
 
-  // Is the particle still useful?
   isDead() {
     return this.lifespan < 0.0;
   }
+
+  // Método para calcular resistencia cuadrática
+  getAirDrag(c) {
+    let speed = this.velocity.mag();
+    if (speed === 0) return createVector(0, 0);
+
+    let dragMagnitude = c * speed * speed;
+    let drag = this.velocity.copy();
+    drag.mult(-1);
+    drag.setMag(dragMagnitude);
+    return drag;
+  }
 }
+
 
 ```
 No cambié el codigo de la clase emittor
@@ -229,10 +235,10 @@ No cambié el codigo de la clase emittor
 
 ## Ejemplo 4.5: a Particle System with Inheritance and Polymorphism.
 ### Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
-Utilicé la interpolación. Añadí un nuevo tipo de particula llamado Colorling y un nuevo metodo llamado ChooseColor. Las particulas base en ChooseColor escogen su color como una interpolación de los colores de los 2 Colorlings mas cercanos, si no hay ninguno se ponen blancas. Los Colorlings sobre escriben este metodo y escogen su color de forma aleatoria.
+Utilicé la interpolación. Añadí un nuevo tipo de particula llamado Colorling y un nuevo metodo llamado ChooseColor. Las particulas base en ChooseColor escogen su color como una interpolación de los colores de los 2 Colorlings mas cercanos, si no hay ninguno se ponen blancas. Los Colorlings sobreescriben este metodo y escogen su color de forma aleatoria.
 
 ### Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste (aunque es posible que la simulación ya lo haga, trata de identificarlo de nuevo y explicarlo con tus palabras).
-La simulación hace lo mismo que las anteriores, aparte de esto algo que no he mencionado es que la opacidad de las particulas disminuye con su tiempo de vida en base al parametro lifespan que cambia el alpha en fill y stroke como tercer parametro, aprovechando esto aumenté el tiempo de vida de mis colorlings para que no pierdan opacidad mientras estan en pantalla y resalten mas.
+La simulación hace lo mismo que las anteriores, la opacidad de las particulas disminuye con su tiempo de vida en base al parametro lifespan que cambia el alpha en fill y stroke como tercer parametro, aprovechando esto aumenté el tiempo de vida de mis colorlings para que no pierdan opacidad mientras estan en pantalla y resalten mas.
 
 ``` js
 class Emitter {
@@ -582,14 +588,14 @@ function mouseReleased() {
 
 ## Ejemplo 4.7: a Particle System with a Repeller.
 ### Explica qué concepto aplicaste, cómo lo aplicaste y por qué.
-Utilicé la atracción gravitacional. se calcula un vector desde el emisor hasta la partícula, se mide su distancia y se limita con constrain. Luego se obtiene la intensidad de la fuerza con power / (distancia²) y se le aplica un signo: negativo si está en modo repeler o positivo si está en modo atractor. Para cambiar de modo entre positivo y negativo se usa el click del mouse y este se mueve en base a la posición del mouse.
+Utilicé la atracción gravitacional. se calcula un vector desde el emisor hasta la partícula, se mide su distancia y se limita con constrain. Luego se obtiene la intensidad de la fuerza con power / (distancia²) y se le aplica un signo: negativo si está en modo repeler o positivo si está en modo atractor. Para cambiar de modo entre positivo y negativo se usa el click del mouse y este se mueve en base a la posición del mouse. La fuerza que se aplica depende de la distancia entre el punto y cada partícula. 
 
 ### Vas a gestionar la creación y la desaparición de las partículas y la memoria. Explica cómo lo hiciste (aunque es posible que la simulación ya lo haga, trata de identificarlo de nuevo y explicarlo con tus palabras).
 Hice que al presionar el enter se borren todas las particulas con: 
   if (keyCode === ENTER) {
  emitter.particles.splice(0, emitter.particles.length);
   }
-Se borra desde la posición 0 todas las n particulas hacia la derecha. El programa sigue manteniendo el mismo sistema de tiempo de vida y eliminación de los ejercicios anteriores.
+Se borra desde la posición 0 todas las n particulas hacia la derecha, de esta forma se puede regular el sistema por si se acumulan muchas particulas alrededor del atractor y evitar problemas de rendimiento. El programa sigue manteniendo el mismo sistema de tiempo de vida y eliminación de los ejercicios anteriores.
 
 ``` js
 // One ParticleSystem
@@ -766,4 +772,5 @@ class Repeller {
 <img width="603" height="233" alt="image" src="https://github.com/user-attachments/assets/d7e9c4e5-b78d-4c94-81e8-4f4ca2b770cd" />
 
 ### Link: https://editor.p5js.org/JuanSMarin2/sketches/c1CApjubN
+
 
