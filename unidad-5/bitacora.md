@@ -777,43 +777,107 @@ class Repeller {
 
 
 # Apply: Aplicación
-## ¿Qué quiero hacer? - Inspiraciones
-Quiero empezar a representar visualmente la musica, desde el principio del curso cuando dijeron que la ultima actividad seria esto mismo pense en este momento de Deltarune: Capitulo 4
-Link: 
-Quiero tomar esto de inspiracion, siempre me imagine que esas hondas eran parte de la lluvia que caen en un rio, se formaban en el momento en el que las gotas. Quiero que las gotas y las hondas representen notas e instrumentos y que caigan en el momento del sonido. Tambien me inspire en la obra The Awesome Machinery Of Nature: We are all connected de Memo Akten, me gusta como se generan sonidos al momento en el que la bola cae y se genera una honda, como el sonido es una honda tambien y como la complejidad aumenta constantemente tal como naturalmente hace una cancion empezando simple y añadiedo nuevas notas.
+## ¿Qué quiero hacer? – Inspiraciones
 
-Cuando pienso en lluvia, la primera canción que se me viene a la mente es Beneath the mask de Persona 5, me gusta como sonaba en los dias lluviosos de este juego y siempre senti como el sonido de la lluvia fuera como un instrumento mas que aumentaba la cal a que causaba la cancion.
+Quiero representar visualmente la música. Desde el principio del curso, cuando mencionaron que la última actividad sería crear una obra generativa con música, pensé en este momento de Deltarune: Capítulo 4.
+
+
+Siempre me imaginé que esas ondas eran parte de la lluvia cayendo en un río, formándose justo en el instante en que las gotas tocaban el agua. A partir de ahí decidí que en mi obra, las gotas y las ondas representarían las notas e instrumentos, apareciendo en sincronía con el sonido.
+
+También me inspiré en la obra The Awesome Machinery of Nature: We Are All Connected de Memo Akten, donde me llamó la atención cómo los sonidos se generan con cada bola que cae y crea ondas, como si el sonido mismo fuera también una onda. Además, me gusta cómo la complejidad aumenta poco a poco, igual que en una canción que empieza simple y va sumando nuevas notas.
+
+Por último, cuando pienso en lluvia, la primera canción que me viene a la mente es Beneath the Mask de Persona 5. Me gustaba cómo sonaba en los días lluviosos dentro del juego y cómo el sonido de la lluvia se sentía como un instrumento más que aumentaba la atmósfera de la canción. Esa misma sensación quiero transmitir en mi obra: la lluvia como música.
 
 ## Diseño
-Quiero hacerlo con una vista top down, en la cancion hay dos tipos de notas, una melodia y otra secundaria que se siente como un campaneo, quiero que las primeras se representen con la aparición de las particulas y las segundas con las hondas que causarian las gotas al agua. Una nota secundaria siempre suena exactamente 4 segundos despues de una principal por lo que este sera el tiempo en el que duraran las particulas en el aire. Estas particulas se podran generar en un lugar aleatorio de la pantalla: 
+
+La obra estará diseñada con una vista top-down (desde arriba). En la canción que tomé como inspiración hay dos tipos de notas: una melodía principal y otra secundaria que suena como un campaneo.
+
+Notas principales (melodía): estarán representadas por partículas.
+
+Notas secundarias: estarán representadas por las ondas que dejan las gotas al tocar el agua.
+
+Estas notas secundarias siempre suenan exactamente 4 segundos después de una principal, por lo que ese será también el tiempo de vida de las partículas.
+
+Las ondas tendrán un tiempo de vida de 1 segundo, expandiéndose y desvaneciéndose con un cambio en el alpha antes de desaparecer.
+
+Las partículas se podrán generar en lugares aleatorios de la pantalla:
+
 <img width="1118" height="776" alt="image" src="https://github.com/user-attachments/assets/75761004-6dd2-46d3-98ba-f8f7de1d90fa" />
 
-Para generar el efecto de caida, la particula se encoje hasta caer, el ratio de reducción de tamaño sera una interpolación entre el maximo y el minimo en el tiempo de duración:
+Para simular la caída, la partícula se irá encogiendo. El tamaño se reducirá mediante una interpolación entre su radio máximo y mínimo durante sus 4 segundos de duración:
+
 <img width="939" height="650" alt="image" src="https://github.com/user-attachments/assets/cd45fffb-42de-44dd-a222-705ced14079d" />
 
-En el momento en el que la particula alcanza su tamaño minimo se genera una honda, sera representado por un circulo que se expande lentamente por un segundo hasta desbanecerse limpiamente con un cambio de alpha, en el momento de desbanecimiento se quita a la particula y la honda de sus respectivos arrays.
+Cuando la partícula llega a su tamaño mínimo, genera una onda. Esta onda será un círculo que se expande lentamente durante 1 segundo antes de desvanecerse. Al desaparecer, tanto la partícula como la onda se eliminarán de sus respectivos arrays:
 
 <img width="937" height="651" alt="image" src="https://github.com/user-attachments/assets/1159334c-a220-4a21-a983-3b084386e7e0" />
 
-La medolia principal tambien se divide en 2 tipos que representare con 2 tipos de particulas distintas, aparte de estas la percución sera una particula triangular y las medolias seran circulares, ya que la medolia se siente mas limpia y circular, en cambio la percusion es mas rigida y triangular.
+La melodía principal se divide en 2 tipos, que representaré con dos tipos distintos de partículas:
+
+Las melodías serán circulares, porque se sienten más limpias y fluidas.
+
+La percusión será triangular, porque es más rígida y marcada.
 
 <img width="937" height="650" alt="image" src="https://github.com/user-attachments/assets/be6bcf5d-9892-4ce8-8552-6fa35c5c7de1" />
 
-Los dos tipos de melodia caen diferente, la melodia 1 se siente mas fluctuante por lo que esta cae en trayectoria de espiral, la melodia 2 es mas limpia por lo que cae en linea recta, representación vertical: 
+Los dos tipos de melodía caerán de manera diferente:
+
+Melodía 1: más fluctuante, con una trayectoria en espiral.
+
+Melodía 2: más limpia, con una trayectoria en línea recta (vertical).
 
 <img width="933" height="653" alt="image" src="https://github.com/user-attachments/assets/ae97ea93-4311-4050-9f67-84ec4d21df67" />
 
-Para no interrumpir a la melodia, las percusiones solo se generan en una de las 4 esquinas, son un triangulo que apunta al centro de la pantalla, la honda que deja no es circular si no que es rigida como la percusion en si en forma de decagono.
+Para no interrumpir a la melodía, las percusiones se generarán solo en una de las cuatro esquinas. Serán triángulos apuntando hacia el centro de la pantalla. La onda que dejan no será circular, sino un decágono rígido, igual de estructurado que la percusión misma.
 
-<img width="936" height="650" alt="image" src="https://github.com/user-attachments/assets/11407ec3-4d3e-424f-8375-9429b6306232" />
+<img width="936" height="650" alt="image" src="https://github.com/user-attachments/assets/11407ec3-4d3e-424f-8375-9429b6306232" /> <img width="913" height="640" alt="image" src="https://github.com/user-attachments/assets/7e55eb0d-85ad-453a-b188-3f84ab5fa924" />
 
-<img width="913" height="640" alt="image" src="https://github.com/user-attachments/assets/7e55eb0d-85ad-453a-b188-3f84ab5fa924" />
-
-Imagen de como imagino la obra:
+Así es como imagino la obra terminada:
 
 <img width="923" height="640" alt="image" src="https://github.com/user-attachments/assets/17ab27e5-f5ed-41cc-a592-d286a437e331" />
 
 
+## Herencia y polimorfismo
+
+Voy a usar herencia y polimorfismo en la estructura de las partículas. La clase padre será Particle, donde defino atributos y comportamientos generales como posición, tamaño, tiempo de vida y la función de mostrar. A partir de ahí voy a crear subclases que extienden a Partícula: MelodyLinear, MelodyCurved y Percution, cada una con su propia forma de caer (espiral, línea recta, desde esquinas) y de dibujarse (círculo o triángulo). Así aprovecho la herencia para no repetir código y el polimorfismo para redefinir update() y display() según el tipo de nota.
+
+## Conceptos de unidades anteriores
+
+Estoy aplicando al menos un concepto de cada unidad previa:
+
+Unidad 4: ondas, para simular la propagación en el agua con las notas secundarias.
+
+Unidad 2: uso motion 101 para las trayectorias y interpolación para el cambio de tamaño de las partículas al caer.
+
+Unidad 1: uso random para decidir la posición inicial de las partículas en pantalla.
+
+## Gestión del tiempo de vida y memoria
+
+Cada partícula tiene un tiempo de vida de 4 segundos y cada onda un tiempo de vida de 1 segundo. Mientras están activas voy actualizando sus valores de tamaño o transparencia, y cuando el tiempo llega a cero las elimino de sus arrays con splice(). De esta manera manejo la memoria de forma eficiente y evito acumulaciones innecesarias en la simulación.
+
+
+
+
+# Nota propuesta y justificación según la rúbrica
+
+## 2. Intención y Diseño - 5.0
+
+Mi obra tiene un concepto claro: representar la música a través de gotas y ondas como si fueran notas. Este concepto se conecta con las inspiraciones que documenté (Deltarune, Memo Akten, Persona 5). Desde ahí diseñé con intención cada aspecto: melodías como partículas, notas secundarias como ondas, percusión como triángulos, duración de vida ligada al ritmo musical. Hice bocetos que muestran visualmente mis ideas y después llevé esas decisiones al código. Todo el proceso de diseño está justificado y se refleja en la obra final.
+
+## 3. Aplicación Técnica - 5.0
+
+Usé herencia y polimorfismo creando una clase padre Particle y subclases con comportamientos diferenciados. Apliqué conceptos de todas las unidades anteriores:
+
+Unidad 1: random para posiciones iniciales y colores de partículas.
+
+Unidad 2: interpolación para el cambio de tamaño y motion 101 para trayectorias.
+
+Unidad 4: ondas para la propagación visual en el agua.
+Definí con claridad la gestión de memoria y tiempo de vida: las partículas duran 4 segundos y las ondas 1 segundo, eliminándose con splice() al terminar su ciclo. Todo está implementado de manera limpia y modular.
+
+## 4. Calidad de la Obra Final - 5.0
+
+El resultado es interactivo, funciona en tiempo real sin errores y mantiene un rendimiento estable. Mi obra es coherente con el concepto planteado: las notas principales caen como gotas, las secundarias generan ondas y la percusión entra de manera diferenciada desde las esquinas. El sistema genera variedad visual y está directamente vinculado a la música que lo inspira. La estética es clara, consistente y comunica la intención desde el diseño.
 
 
 
