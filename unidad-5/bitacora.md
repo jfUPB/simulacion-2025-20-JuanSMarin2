@@ -860,6 +860,15 @@ Cada partícula tiene un tiempo de vida de 4 segundos y cada onda un tiempo de v
 
 # Nota propuesta y justificación según la rúbrica
 
+## 1. Investigación y Experimentación - 5.0
+
+En esta actividad apliqué diferentes conceptos relacionados con la creación, control y eliminación de partículas en sistemas dinámicos. A lo largo de los ejemplos, probé con probabilidades de aparición con distribución no uniforme, fuerzas como la gravedad, la resistencia del aire y la atracción/repulsión, además de técnicas de herencia y polimorfismo para extender el comportamiento de las partículas. También exploré cómo las partículas interactúan entre sí y con elementos externos como péndulos o repulsores.
+
+En todos los casos, gestioné la vida útil de las partículas modificando la variable lifespan, lo que permite que desaparezcan progresivamente al agotarse su tiempo. Para liberar espacio en el arreglo entendí y jugue con splice(), de modo que cada vez que una partícula muere se elimina su referencia, dejando que el recolector de basura libere memoria. Además, experimenté con la eliminación masiva de partículas para entender cómo esto afecta al rendimiento y al efecto visual.
+
+Esta actividad me permitió comprender que el manejo correcto de la creación y eliminación de partículas no solo mantiene el rendimiento del sistema, sino que también influye directamente en la estética y el comportamiento visual de la simulación.
+
+
 ## 2. Intención y Diseño - 5.0
 
 Mi obra tiene un concepto claro: representar la música a través de gotas y ondas como si fueran notas. Este concepto se conecta con las inspiraciones que documenté (Deltarune, Memo Akten, Persona 5). Desde ahí diseñé con intención cada aspecto: melodías como partículas, notas secundarias como ondas, percusión como triángulos, duración de vida ligada al ritmo musical. Hice bocetos que muestran visualmente mis ideas y después llevé esas decisiones al código. Todo el proceso de diseño está justificado y se refleja en la obra final.
@@ -878,6 +887,7 @@ Definí con claridad la gestión de memoria y tiempo de vida: las partículas du
 ## 4. Calidad de la Obra Final - 5.0
 
 El resultado es interactivo, funciona en tiempo real sin errores y mantiene un rendimiento estable. Mi obra es coherente con el concepto planteado: las notas principales caen como gotas, las secundarias generan ondas y la percusión entra de manera diferenciada desde las esquinas. El sistema genera variedad visual y está directamente vinculado a la música que lo inspira. La estética es clara, consistente y comunica la intención desde el diseño.
+
 
 
 
