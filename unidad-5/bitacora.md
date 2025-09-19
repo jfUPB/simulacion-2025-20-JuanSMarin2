@@ -866,8 +866,281 @@ Unidad 1: uso random para decidir la posición inicial de las partículas en pan
 ## Gestión del tiempo de vida y memoria
 
 Cada partícula tiene un tiempo de vida de 4 segundos y cada onda un tiempo de vida de 1 segundo. Mientras están activas voy actualizando sus valores de tamaño o transparencia, y cuando el tiempo llega a cero las elimino de sus arrays con splice(). De esta manera manejo la memoria de forma eficiente y evito acumulaciones innecesarias en la simulación.
+## Capturas de pantalla
 
+<img width="1814" height="1017" alt="image" src="https://github.com/user-attachments/assets/b9670405-f30d-4a35-a24d-5915e18d29ca" />
 
+<img width="1813" height="1015" alt="image" src="https://github.com/user-attachments/assets/6ba131ec-8c0e-4c92-982a-dd7785d6fcb8" />
+
+### Link: https://editor.p5js.org/JuanSMarin2/sketches/46nXE2Gqd
+
+### Código fuente: 
+``` js
+let particles = [];
+let ripples = [];
+
+const PARTICLE_LIFESPAN = 3380;
+const RIPPLE_LIFESPAN   = 1000;
+const PERC_LIFE_MS_MIN  = 120;
+const PERC_LIFE_MS_MAX  = 160;
+
+const BG = [12, 54, 130];
+const PALETTE = [
+  [255, 99, 71],
+  [255, 184, 77],
+  [80, 220, 130],
+  [120, 200, 255],
+  [200, 140, 255],
+  [255, 220, 90],
+  [80, 230, 210],
+];
+
+let snd, fft, peak;
+let audioReady = false, audioPlaying = false;
+const PEAK_FREQ_LOW = 20;
+const PEAK_FREQ_HIGH = 180;
+const PEAK_THRESHOLD = 0.22;
+const PEAK_COOLDOWN_MS = 110;
+let lastPercAt = -9999;
+
+const SPEED_LINEAR = 1.0;
+const ORBIT_MIN = 2, ORBIT_MAX = 5;
+const PERC_MARGIN = 170;
+
+function preload() {
+  snd = loadSound('BTM_P5.mp3');
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  fft = new p5.FFT(0.9, 1024);
+  peak = new p5.PeakDetect(PEAK_FREQ_LOW, PEAK_FREQ_HIGH, PEAK_THRESHOLD, 20);
+  background(BG[0], BG[1], BG[2]);
+}
+
+function draw() {
+  background(BG[0], BG[1], BG[2]);
+
+  if (audioPlaying) {
+    fft.analyze();
+    peak.update(fft);
+    detectPercussion();
+  }
+
+  for (let p of particles) {
+    p.update();
+    p.display();
+  }
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    if (particles[i].isDead()) {
+      particles[i].impact();
+      particles.splice(i, 1);
+    }
+  }
+
+  for (let r of ripples) {
+    r.update();
+    r.display();
+  }
+
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    if (ripples[i].isDead()) ripples.splice(i, 1);
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function randomCorner(margin = 0) {
+  const m = min(margin, width * 0.25, height * 0.25);
+  const i = floor(random(4));
+  return [
+    createVector(m, m),
+    createVector(width - m, m),
+    createVector(width - m, height - m),
+    createVector(m, height - m),
+  ][i];
+}
+
+function detectPercussion() {
+  const now = millis();
+  if (peak.isDetected && now - lastPercAt > PEAK_COOLDOWN_MS) {
+    lastPercAt = now;
+    const pos = randomCorner(PERC_MARGIN);
+    particles.push(new PercussionDrop(pos.x, pos.y));
+  }
+}
+
+function keyPressed() {
+  if (key === '1') {
+    ensureAudio();
+    const pos = createVector(random(width*0.07, width*0.93),
+                             random(height*0.07, height*0.93));
+    particles.push(new MelodyLinear(pos.x, pos.y));
+  }
+  if (key === '2') {
+    ensureAudio();
+    const pos = createVector(random(width*0.07, width*0.93),
+                             random(height*0.07, height*0.93));
+    particles.push(new MelodyCurved(pos.x, pos.y));
+  }
+  if (key === 'p' || key === 'P') ensureAudio(true);
+  if (key === 'f' || key === 'F') fullscreen(!fullscreen());
+}
+
+function ensureAudio(toggleOnly=false) {
+  if (!audioReady) {
+    userStartAudio().then(() => {
+      fft.setInput(snd);
+      audioReady = true;
+      if (!toggleOnly && !snd.isPlaying()) {
+        snd.loop();
+        audioPlaying = true;
+      }
+    });
+  } else {
+    if (toggleOnly) {
+      if (snd.isPlaying()) { snd.pause(); audioPlaying = false; }
+      else { snd.loop(); audioPlaying = true; }
+    } else if (!snd.isPlaying()) {
+      snd.loop(); audioPlaying = true;
+    }
+  }
+}
+
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.birth = millis();
+    this.lifespan = PARTICLE_LIFESPAN;
+    this.rMax = random(70, 110);
+    this.rMin = random(6, 10);
+    this.col = randomColor(220);
+  }
+  progress() { return constrain((millis() - this.birth) / this.lifespan, 0, 1); }
+  currentRadius() { return lerp(this.rMax, this.rMin, this.progress()); }
+  update() {}
+  display() {
+    noStroke();
+    fill(this.col);
+    const r = this.currentRadius();
+    circle(this.position.x, this.position.y, r*2);
+  }
+  impact() { ripples.push(new CircleRipple(this.position.x, this.position.y, this.col)); }
+  isDead() { return millis() - this.birth >= this.lifespan; }
+}
+
+class MelodyLinear extends Particle {
+  constructor(x, y) {
+    super(x, y);
+    this.v = createVector(0, SPEED_LINEAR);
+  }
+  update() {
+    this.position.add(this.v);
+    this.position.y = constrain(this.position.y, 0, height);
+  }
+}
+
+class MelodyCurved extends Particle {
+  constructor(x, y) {
+    super(x, y);
+    this.origin = this.position.copy();
+    this.orbitR = random(ORBIT_MIN, ORBIT_MAX);
+    this.theta = random(TWO_PI);
+    this.angSpeed = random(0.06, 0.12);
+  }
+  update() {
+    this.theta += this.angSpeed;
+    this.position.x = this.origin.x + this.orbitR * cos(this.theta);
+    this.position.y = this.origin.y + this.orbitR * sin(this.theta);
+  }
+}
+
+class PercussionDrop extends Particle {
+  constructor(x, y) {
+    super(x, y);
+    this.lifespan = random(PERC_LIFE_MS_MIN, PERC_LIFE_MS_MAX);
+    this.rMax = random(80, 130);
+    this.rMin = random(8, 12);
+    this.col = randomColor(240);
+    const dir = p5.Vector.sub(createVector(width/2, height/2), this.position);
+    this.angle = atan2(dir.y, dir.x);
+  }
+  display() {
+    noStroke();
+    fill(this.col);
+    const r = this.currentRadius();
+    push();
+    translate(this.position.x, this.position.y);
+    rotate(this.angle);
+    triangle(-r*0.8, -r*0.6, -r*0.8, r*0.6, r, 0);
+    pop();
+  }
+  impact() {
+    ripples.push(new PolygonRipple(this.position.x, this.position.y, 10, this.col));
+  }
+}
+
+class Ripple {
+  constructor(x, y, col) {
+    this.pos = createVector(x, y);
+    this.birth = millis();
+    this.lifespan = RIPPLE_LIFESPAN;
+    this.maxR = random(90, 140);
+    this.col = col || color(255);
+  }
+  t() { return constrain((millis() - this.birth) / this.lifespan, 0, 1); }
+  isDead() { return millis() - this.birth >= this.lifespan; }
+}
+
+class CircleRipple extends Ripple {
+  update() {}
+  display() {
+    const k = this.t();
+    const r = this.maxR * easeOutQuad(k);
+    const a = map(1 - k, 0, 1, 0, 230);
+    noFill();
+    stroke(red(this.col), green(this.col), blue(this.col), a);
+    strokeWeight(3);
+    circle(this.pos.x, this.pos.y, r*2);
+  }
+}
+
+class PolygonRipple extends Ripple {
+  constructor(x, y, sides, col) {
+    super(x, y, col);
+    this.sides = sides;
+  }
+  update() {}
+  display() {
+    const k = this.t();
+    const r = this.maxR * easeOutCubic(k);
+    const a = map(1 - k, 0, 1, 0, 230);
+    noFill();
+    stroke(red(this.col), green(this.col), blue(this.col), a);
+    strokeWeight(4);
+    push();
+    translate(this.pos.x, this.pos.y);
+    beginShape();
+    for (let i = 0; i < this.sides; i++) {
+      const ang = TWO_PI * (i / this.sides);
+      vertex(r * cos(ang), r * sin(ang));
+    }
+    endShape(CLOSE);
+    pop();
+  }
+}
+
+function randomColor(alpha=255) {
+  const c = random(PALETTE);
+  return color(c[0], c[1], c[2], alpha);
+}
+function easeOutQuad(x)  { return 1 - (1 - x) * (1 - x); }
+function easeOutCubic(x) { return 1 - pow(1 - x, 3); }
+
+```
 
 
 # Nota propuesta y justificación según la rúbrica
@@ -899,6 +1172,7 @@ Definí con claridad la gestión de memoria y tiempo de vida: las partículas du
 ## 4. Calidad de la Obra Final - 5.0
 
 El resultado es interactivo, funciona en tiempo real sin errores y mantiene un rendimiento estable. Mi obra es coherente con el concepto planteado: las notas principales caen como gotas, las secundarias generan ondas y la percusión entra de manera diferenciada desde las esquinas. El sistema genera variedad visual y está directamente vinculado a la música que lo inspira. La estética es clara, consistente y comunica la intención desde el diseño.
+
 
 
 
