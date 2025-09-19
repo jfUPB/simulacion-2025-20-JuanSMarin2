@@ -782,9 +782,21 @@ class Repeller {
 Quiero representar visualmente la música. Desde el principio del curso, cuando mencionaron que la última actividad sería crear una obra generativa con música, pensé en este momento de Deltarune: Capítulo 4.
 
 
+
+<img width="1555" height="1026" alt="image" src="https://github.com/user-attachments/assets/fcddd488-0ffc-4956-b6bf-9831ddae466e" />
+
+2:18:40
+https://www.youtube.com/watch?v=eA-RBpfcGgQ&t=8327s
+
 Siempre me imaginé que esas ondas eran parte de la lluvia cayendo en un río, formándose justo en el instante en que las gotas tocaban el agua. A partir de ahí decidí que en mi obra, las gotas y las ondas representarían las notas e instrumentos, apareciendo en sincronía con el sonido.
 
 También me inspiré en la obra The Awesome Machinery of Nature: We Are All Connected de Memo Akten, donde me llamó la atención cómo los sonidos se generan con cada bola que cae y crea ondas, como si el sonido mismo fuera también una onda. Además, me gusta cómo la complejidad aumenta poco a poco, igual que en una canción que empieza simple y va sumando nuevas notas.
+
+<img width="1438" height="877" alt="image" src="https://github.com/user-attachments/assets/001b64e6-45f3-4605-af5e-f2a708c4b579" />
+
+2:45
+https://www.youtube.com/watch?v=cRpRr43Mbok
+
 
 Por último, cuando pienso en lluvia, la primera canción que me viene a la mente es Beneath the Mask de Persona 5. Me gustaba cómo sonaba en los días lluviosos dentro del juego y cómo el sonido de la lluvia se sentía como un instrumento más que aumentaba la atmósfera de la canción. Esa misma sensación quiero transmitir en mi obra: la lluvia como música.
 
@@ -887,6 +899,7 @@ Definí con claridad la gestión de memoria y tiempo de vida: las partículas du
 ## 4. Calidad de la Obra Final - 5.0
 
 El resultado es interactivo, funciona en tiempo real sin errores y mantiene un rendimiento estable. Mi obra es coherente con el concepto planteado: las notas principales caen como gotas, las secundarias generan ondas y la percusión entra de manera diferenciada desde las esquinas. El sistema genera variedad visual y está directamente vinculado a la música que lo inspira. La estética es clara, consistente y comunica la intención desde el diseño.
+
 
 
 
