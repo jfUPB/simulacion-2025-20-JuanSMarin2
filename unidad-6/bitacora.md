@@ -75,5 +75,11 @@ El agente le da su posicion al campo de flujo para que este le de el parametro d
 
 ### Lista los parámetros clave identificados (resolución, maxspeed, maxforce).
 
+* La resolución: Se pasa como parametro en el constructor del campo de flujo y se usa para calcular el tamaño y numero de las filas y columnas
+* Motion 101: Siguen estando los parametros clave para hacer Motion 101, la posición, velocidad y aceleración. siguen haciendo lo de siempre, cada una altera al vector anterior para generar movimiento.
+* maxSpeed: Controla la velocidad maxima a la que el agente puede viajar.
+* maxForce: Limita el cambio de fuerza al que se le puede aplicar al objeto para no hacer cambios muy abruptos
+  
+
 
 
