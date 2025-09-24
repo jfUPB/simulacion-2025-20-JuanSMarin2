@@ -30,3 +30,50 @@ Las fuerzas que hemos estudiado afectan el movimiento y la rapidez ya sea aument
 ### ¿Qué relación tiene la steering force con Craig Reynolds y su trabajo en simulación de comportamiento animal?
 Con esta se pueden hacer movimientos mas naturales para simular el comportamiento animal, un animal no se mueve con ruido perlin o saltos de levy. Se pueden hacer movimientos que parezcan desiciones como escapar o ir a un sitio especifico.
 
+
+## Actividad 03
+
+### Explica brevemente la estructura de datos usada para el campo de flujo y cómo se generan sus vectores.
+El flujo se genera como un Array de que almacena un dos vectores, de columnas y de filas. 
+Los vectores se obtienen dividiendo el alto y ancho del canvas con la resolución de la pantalla. La resolución es un parametro que se escoge en el constructor.
+``` js
+ flowfield = new FlowField(20);
+
+constructor(r) {
+    this.resolution = r;
+
+    this.cols = width / this.resolution;
+    this.rows = height / this.resolution;
+
+    this.field = new Array(this.cols);
+    for (let i = 0; i < this.cols; i++) {
+      this.field[i] = new Array(this.rows);
+    }
+    this.init();
+  }
+
+```
+
+### Describe con tus palabras cómo un agente utiliza el campo para calcular su fuerza de dirección.
+El agente le da su posicion al campo de flujo para que este le de el parametro de la ubicación deseada, despues evitando que se pase de la velocidad maxima, se aplica la fuerza de corrección calculada restando el deseo con la velocidad actual 
+
+``` js
+ follow(flow) {
+
+    let desired = flow.lookup(this.position);
+
+    desired.mult(this.maxspeed);
+ 
+    let steer = p5.Vector.sub(desired, this.velocity);
+    steer.limit(this.maxforce);
+    this.applyForce(steer);
+  }
+
+```
+
+
+
+### Lista los parámetros clave identificados (resolución, maxspeed, maxforce).
+
+
+
