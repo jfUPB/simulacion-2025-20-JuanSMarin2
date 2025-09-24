@@ -1,1 +1,32 @@
 # Evidencias de la unidad 6
+
+
+## Actividad 01
+
+### Captura en tu bitácora dos imágenes de Tyler Hobbs que te llamen la atención y explica por qué.
+
+<img width="742" height="749" alt="image" src="https://github.com/user-attachments/assets/3436dfd7-4d23-4583-ad92-1f0f83e60dc2" />
+
+
+
+Me gusta como esta obra crea una figura que se asemeja tanto a un arbol y a unas raices a pesar de ser lineas creadas unicamente con angulos aleatorios por vector.
+
+<img width="680" height="668" alt="image" src="https://github.com/user-attachments/assets/3abe818a-8997-4358-a6ec-2fb346cab0b6" />
+
+
+Me llama la atención que en esta obra no hay ninguna foto, solo hay figuras con colores pero a pesar de los espacios vacios entre ellas se crea la ilusión de que hay una fotografia.
+
+
+### ¿Qué te inspira de su trabajo?
+Como él es capaz de generar imagenes tan distintas simplemente cambiando parametros. Como experimenta con sus obras para ver que es lo que sucede y como quedan obras tan variadas, asi como las de las ramas, no creo que hubiera sido intencional y aun asi logró asemejarse a un fenomeno real. Me inspira a experimentar de misma manera con mis obras para ver que cambios tan variados puedo generar.
+
+## Actividad 02
+### ¿Qué es una fuerza de dirección (steering force)?
+Es una fuerza para corregir el movimiento de un objeto, hace que un objeto se mueva al lugar se desea corrigiendo el vector de velocidad.
+
+### ¿Qué diferencia tiene este tipo de fuerza con las que ya hemos estudiado en el contexto de la simulación de agentes?
+Las fuerzas que hemos estudiado afectan el movimiento y la rapidez ya sea aumentandola o disminuyendola como la fricción, hasta ahora no teniamos ninguna fuerza (Aparte de la gravedad) que influyera en la dirección en la que se mueve el objeto haciendo que tienda a una posición exacta. 
+
+### ¿Qué relación tiene la steering force con Craig Reynolds y su trabajo en simulación de comportamiento animal?
+Con esta se pueden hacer movimientos mas naturales para simular el comportamiento animal, un animal no se mueve con ruido perlin o saltos de levy. Se pueden hacer movimientos que parezcan desiciones como escapar o ir a un sitio especifico.
+
