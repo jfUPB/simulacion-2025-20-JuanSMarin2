@@ -80,6 +80,293 @@ El agente le da su posicion al campo de flujo para que este le de el parametro d
 * maxSpeed: Controla la velocidad maxima a la que el agente puede viajar.
 * maxForce: Limita el cambio de fuerza al que se le puede aplicar al objeto para no hacer cambios muy abruptos
   
+### Describe la modificación que realizaste al código y explica detalladamente el efecto que tuvo en el movimiento y comportamiento colectivo de los agentes
+
+Utilizo una distribución gaussiana para generar el campo, se elige un centro y todos los vectores del campo tienden a apuntar hacia ese punto. De esta manera la mayoría de los agentes se agrupan en una misma posición. Al hacer clic, se elige un nuevo centro y los vectores se reajustan, cambiando también el movimiento y la organización de los agentes.
+
+![Grabación-de-pantalla-2025-09-30-173436](https://github.com/user-attachments/assets/44868de3-6dc5-400b-832f-97aedf2a0005)
+
+``` js
+class FlowField {
+  constructor(r) {
+    this.resolution = r;
+    this.cols = floor(width / this.resolution);
+    this.rows = floor(height / this.resolution);
+    this.field = Array.from({ length: this.cols }, () => new Array(this.rows));
+    this.numSources = 6;           
+    this.sigmaRange = [80, 220];     
+    this.init();
+  }
 
 
+  init() {
+    this.sources = [];
+    for (let k = 0; k < this.numSources; k++) {
+      this.sources.push({
+        pos: createVector(random(width), random(height)),
+        sigma: random(this.sigmaRange[0], this.sigmaRange[1]),
+        sign: random([-1, 1]),          
+        swirl: random() < 0.5 ? 0 : 1,    
+        strength: random(0.8, 1.6)
+      });
+    }
 
+    for (let i = 0; i < this.cols; i++) {
+      for (let j = 0; j < this.rows; j++) {
+        const w = this.resolution;
+        const h = this.resolution;
+        const x = i * w + w * 0.5;
+        const y = j * h + h * 0.5;
+        const p = createVector(x, y);
+
+        let v = createVector(0, 0);
+
+        for (const s of this.sources) {
+          const d = p5.Vector.sub(s.pos, p);
+          const r2 = d.magSq();
+          const twoSigma2 = 2 * s.sigma * s.sigma;
+          const weight = Math.exp(-r2 / twoSigma2) * s.strength;
+
+          if (weight < 1e-4) continue;
+
+          let contrib = d.copy();
+          if (s.swirl === 1) {
+   
+            contrib = createVector(-d.y, d.x);
+          }
+
+          contrib.setMag(weight);
+          contrib.mult(s.sign);
+          v.add(contrib);
+        }
+
+        if (v.mag() < 1e-6) {
+
+          v = p5.Vector.fromAngle(random(TWO_PI)).mult(0.001);
+        } else {
+          v.normalize();
+        }
+        this.field[i][j] = v;
+      }
+    }
+  }
+
+  show() {
+    stroke(0, 60);
+    strokeWeight(1);
+    for (let i = 0; i < this.cols; i++) {
+      for (let j = 0; j < this.rows; j++) {
+        const w = this.resolution;
+        const h = this.resolution;
+        const x = i * w + w * 0.5;
+        const y = j * h + h * 0.5;
+        const v = this.field[i][j].copy().mult(w * 0.5);
+        line(x, y, x + v.x, y + v.y);
+      }
+    }
+  }
+
+  lookup(position) {
+    const column = constrain(floor(position.x / this.resolution), 0, this.cols - 1);
+    const row = constrain(floor(position.y / this.resolution), 0, this.rows - 1);
+    return this.field[column][row].copy();
+  }
+}
+
+```
+
+## Actividad 04
+### Explica con tus palabras el objetivo y la lógica general de cálculo de cada una de las tres reglas de Flocking (Separación, Alineación, Cohesión).
+En el metodo Flock se calculan las 3 reglas atravez de sus propias funciones:
+#### Separación
+Primero detecta a los boids cercanos, en este caso a 25 unidades de distancia aunque el autor aclara que este valor es arbitrario y se puede cambiar.
+Despues si el boid esta entre la distancia determinada y 0 calcula un vector para alejarse y este vector es el que la funcion devuelve y aplica como fuerza.
+#### Alineación
+Calcula la velocidad de todos los boids cercanos y lo alinea usando la formula de Reynolds’s (steer = desired – velocity)
+#### Cohesión
+Es muy parecido al de alineación pero en vez de calcular la velocidad de los boids cercanos, calcula la posicion y la convierte en el lugar deseado
+
+### Lista los parámetros clave identificados (radio de percepción, pesos de las reglas, maxspeed, maxforce).
+* Radio de percepción: Para hacer los calculos de todos los metodos del flocking solo se tienen en cuenta a los agentes cercanos, este parametro es la distancia en la cual si hay un boid a esta distancia se toma en cuenta para el calculo.
+* r: Radio para dibujar al boid.
+* maxSpeed: Velocidad maxima que puede tener un boid.
+* masForce: Fuerza maxima que se le puede aplicar a un boid.
+* Pesos de las reglas: Multiplicador para el vector calculado en cada metodo de flocking.
+
+  ### Describe la modificación que realizaste al código y explica detalladamente el efecto que tuvo en el comportamiento
+
+Cambie el radio de percepcion de los metodos de flocking, puse en 0 la separación y la alineación y aunmente exageradamente la cohesión a 1000.
+Esto causa un efecto interesante, al principio todos los boids se agrupan en un solo lugar como era de esperarse, el lugar en el que se agrupan se mueve lentamente. 
+Lo interesante sucede cuando se generan nuevos boids y cuando llegan a una esquina, en vez de unirse al centro empiezan a orbitar el cumulo lo que a su vez afecta el movimiento de los boids que hacen parte del cumulo, quedan orbitando como si fueran los anillos de saturno.
+
+![Grabación-de-pantalla-2025-09-30-181918](https://github.com/user-attachments/assets/3e7d97c9-8b06-49e0-a7db-22b5285a95a3)
+
+``` ja
+
+class Boid {
+  constructor(x, y) {
+    this.acceleration = createVector(0, 0);
+    this.velocity = createVector(random(-1, 1), random(-1, 1));
+    this.position = createVector(x, y);
+    this.r = 3.0;
+    this.maxspeed = 3; // Maximum speed
+    this.maxforce = 0.05; // Maximum steering force
+  }
+
+  run(boids) {
+    this.flock(boids);
+    this.update();
+    this.borders();
+    this.show();
+  }
+
+  applyForce(force) {
+    // We could add mass here if we want A = F / M
+    this.acceleration.add(force);
+  }
+
+  // We accumulate a new acceleration each time based on three rules
+  flock(boids) {
+    let sep = this.separate(boids); // Separation
+    let ali = this.align(boids); // Alignment
+    let coh = this.cohere(boids); // Cohesion
+    // Arbitrarily weight these forces
+    sep.mult(1.5);
+    ali.mult(1.0);
+    coh.mult(1.0);
+    // Add the force vectors to acceleration
+    this.applyForce(sep);
+    this.applyForce(ali);
+    this.applyForce(coh);
+  }
+
+  // Method to update location
+  update() {
+    // Update velocity
+    this.velocity.add(this.acceleration);
+    // Limit speed
+    this.velocity.limit(this.maxspeed);
+    this.position.add(this.velocity);
+    // Reset accelertion to 0 each cycle
+    this.acceleration.mult(0);
+  }
+
+  // A method that calculates and applies a steering force towards a target
+  // STEER = DESIRED MINUS VELOCITY
+  seek(target) {
+    let desired = p5.Vector.sub(target, this.position); // A vector pointing from the location to the target
+    // Normalize desired and scale to maximum speed
+    desired.normalize();
+    desired.mult(this.maxspeed);
+    // Steering = Desired minus Velocity
+    let steer = p5.Vector.sub(desired, this.velocity);
+    steer.limit(this.maxforce); // Limit to maximum steering force
+    return steer;
+  }
+
+  show() {
+    // Draw a triangle rotated in the direction of velocity
+    let angle = this.velocity.heading();
+    fill(127);
+    stroke(0);
+    push();
+    translate(this.position.x, this.position.y);
+    rotate(angle);
+    beginShape();
+    vertex(this.r * 2, 0);
+    vertex(-this.r * 2, -this.r);
+    vertex(-this.r * 2, this.r);
+    endShape(CLOSE);
+    pop();
+  }
+
+  // Wraparound
+  borders() {
+    if (this.position.x < -this.r) this.position.x = width + this.r;
+    if (this.position.y < -this.r) this.position.y = height + this.r;
+    if (this.position.x > width + this.r) this.position.x = -this.r;
+    if (this.position.y > height + this.r) this.position.y = -this.r;
+  }
+
+  // Separation
+  // Method checks for nearby boids and steers away
+  separate(boids) {
+    let desiredSeparation = 0;
+    let steer = createVector(0, 0);
+    let count = 0;
+    // For every boid in the system, check if it's too close
+    for (let i = 0; i < boids.length; i++) {
+      let d = p5.Vector.dist(this.position, boids[i].position);
+      // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
+      if (d > 0 && d < desiredSeparation) {
+        // Calculate vector pointing away from neighbor
+        let diff = p5.Vector.sub(this.position, boids[i].position);
+        diff.normalize();
+        diff.div(d); // Weight by distance
+        steer.add(diff);
+        count++; // Keep track of how many
+      }
+    }
+    // Average -- divide by how many
+    if (count > 0) {
+      steer.div(count);
+    }
+
+    // As long as the vector is greater than 0
+    if (steer.mag() > 0) {
+      // Implement Reynolds: Steering = Desired - Velocity
+      steer.normalize();
+      steer.mult(this.maxspeed);
+      steer.sub(this.velocity);
+      steer.limit(this.maxforce);
+    }
+    return steer;
+  }
+
+  // Alignment
+  // For every nearby boid in the system, calculate the average velocity
+  align(boids) {
+    let neighborDistance = 0;
+    let sum = createVector(0, 0);
+    let count = 0;
+    for (let i = 0; i < boids.length; i++) {
+      let d = p5.Vector.dist(this.position, boids[i].position);
+      if (d > 0 && d < neighborDistance) {
+        sum.add(boids[i].velocity);
+        count++;
+      }
+    }
+    if (count > 0) {
+      sum.div(count);
+      sum.normalize();
+      sum.mult(this.maxspeed);
+      let steer = p5.Vector.sub(sum, this.velocity);
+      steer.limit(this.maxforce);
+      return steer;
+    } else {
+      return createVector(0, 0);
+    }
+  }
+
+  // Cohesion
+  // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
+  cohere(boids) {
+    let neighborDistance = 10000;
+    let sum = createVector(0, 0); // Start with empty vector to accumulate all locations
+    let count = 0;
+    for (let i = 0; i < boids.length; i++) {
+      let d = p5.Vector.dist(this.position, boids[i].position);
+      if (d > 0 && d < neighborDistance) {
+        sum.add(boids[i].position); // Add location
+        count++;
+      }
+    }
+    if (count > 0) {
+      sum.div(count);
+      return this.seek(sum); // Steer towards the location
+    } else {
+      return createVector(0, 0);
+    }
+  }
+}
+```
