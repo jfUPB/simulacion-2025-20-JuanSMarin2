@@ -370,3 +370,37 @@ class Boid {
   }
 }
 ```
+
+
+
+# Apply: Aplicación
+## ¿Qué quiero hacer? – Inspiraciones
+Quiero seguir complementando la simulación que empecé en la unidad pasada. Cuando veo los boids del ejemplo de flocking siempre me parece que son renacuajos nadando en la laguna por lo que quiero aprovechar esto para hacer la simulación. Tomando de inspiración mi propia obra con las mismas inspiraciones.
+
+
+Pensando en como aplicar musica sin repetir concepto y haciendo algo que altere los movimientos de los renacuajos se me ocurre hacer algo similar a la simulación de Esteban de la unidad pasada, cada nota será un pedaso de comida al que se convertira en la ubicación deseada de los renacuajos.
+<img width="719" height="500" alt="image" src="https://github.com/user-attachments/assets/a59da2f5-2eb0-4fdd-bdc2-0cda90a2303f" />
+
+La cancion que se me ocurre es "When Mother Was There" que tambien es de Persona 5, la escojo porque necesito una cancion lenta pero con mucha variedad de instrumentos ya que alterando los parametros del flocking puedo hacer que el movimiento de los renacuajos varie mucho.
+
+La melodia principal de la cancion se dispone de dos momentos, una serie de notas que se representa como una pregunta y otra que es como la respuesta. Quiero que la primera se represente con la caida de un alimento y la respuesta sea el movimiento de los boids a este.
+<img width="717" height="497" alt="image" src="https://github.com/user-attachments/assets/98580d2c-4a34-4d83-95c9-d70c09bc7c3d" />
+<img width="848" height="590" alt="image" src="https://github.com/user-attachments/assets/6c458c63-b8e3-4572-a1c2-4d5fd686ac28" />
+
+Igual que la simulación anterior, el alimento caera como vista top down y al impactar con el agua dejara una honda pero en esta no desaparece solo al caer si no que desaparece un segundo despues de que un agente lo toque para que no desaparezca muy rapido y para que los renacuajos alcancen a dirigirse a este.
+
+Pero la canción no solo se compone de melodia. Hay una parte en el que la melodia principal se detiene y se cambia por una melodia diferente de guitarra. Pero este se sigue comportando como pregunta y respuesta aunque dejando mas tiempo vacio entre estos. Estas se representaran con cambios en el radio de detección de los 3 metodos del flocking. Escojo representarlos con esta parte de la cancion ya que se necesita mas tiempo para apreciar los cambios que se generar al alterar la separación, alineación y cohesión por lo que los cambios de secciones de la cancion mas demorados de esta parte de la cancion cuadran perfecto para esto.
+<img width="970" height="674" alt="image" src="https://github.com/user-attachments/assets/f85ee02c-a7be-482f-a4a4-a0acd719d118" />
+<img width="711" height="494" alt="image" src="https://github.com/user-attachments/assets/9d5ebc06-f4b2-41dd-b875-6d75719a698c" />
+<img width="846" height="587" alt="image" src="https://github.com/user-attachments/assets/69a90d4a-9d03-4723-89a9-1804a93c9e25" />
+<img width="850" height="591" alt="image" src="https://github.com/user-attachments/assets/4a9580b3-90c2-4879-aa05-1de1e05a2df5" />
+
+El paso de esta parte de la canción devuelta a la primera tiene como una explosión lo que es perfecto ya que el cambio de separacion y alineacion de 0 a 50 hace que los renacuajos se dispercen como una explosión por lo que este sera el que lo represente.
+
+La percución se representara con las mismas gotas triangulares y hondas de decagono de la unidad anterior que dejan una honda pero en este caso tambien cambian el color del lago entre tonos de azul
+
+<img width="593" height="415" alt="image" src="https://github.com/user-attachments/assets/995ac50a-6e9e-4dd8-a9ec-5ec74fb10b7b" />
+
+<img width="585" height="404" alt="image" src="https://github.com/user-attachments/assets/1fcbe823-1a7f-4c62-b318-aed55e0cbc03" />
+
+
