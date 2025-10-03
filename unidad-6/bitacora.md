@@ -778,3 +778,23 @@ function randomColor(alpha=255){ const c = random(PALETTE); return color(c[0],c[
 ```
 
 ### Link: https://editor.p5js.org/JuanSMarin2/sketches/jPGB1DKOS
+
+# Auto evaluación
+## Nota: 5.0
+Defensa de la nota
+
+Actividad 01:
+Seleccioné dos obras de Tyler Hobbs, las analicé y expliqué qué me llamó la atención de cada una. Reflexioné sobre cómo su proceso me inspira a experimentar con mis propios parámetros.
+
+Actividad 02:
+Expliqué con mis palabras qué es una steering force, su diferencia con otras fuerzas vistas antes y su relación con Craig Reynolds. La explicación fue clara y aplicada al contexto de agentes.
+
+Actividad 03:
+Expliqué la estructura del campo de flujo, cómo los agentes calculan sus fuerzas de dirección, listé los parámetros clave y mostré el código modificado con distribución gaussiana. Documenté los efectos observados con capturas de pantalla y explicación detallada.
+
+Actividad 04:
+Expliqué las tres reglas del flocking, listé parámetros clave, realicé una modificación en los radios de percepción y describí claramente el efecto (agrupación en cúmulo y órbitas tipo “Saturno”). Incluí código y evidencia visual.
+
+Aplicación (Apply):
+Propuse un proyecto inspirado en los renacuajos y la música de Persona 5. Documenté las decisiones creativas, cómo representé los momentos musicales con parámetros de flocking, gotas, ondas y cambios de color. Incluí código, capturas y justificación conceptual.
+
