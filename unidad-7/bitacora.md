@@ -1,5 +1,6 @@
 # Evidencias de la unidad 7
 
+# Actividad 1
 ## Tu análisis de 3-4 ejemplos de Ji Lee, explicando cómo logran la conexión palabra-imagen.
 
 Noté que hay algunas conexiones que utilizan la forma de las letras y no solo el comportamiento de la palabra y siento que estas son las mas creativas e interesantes
@@ -28,4 +29,119 @@ Las dos t estan en un duelo. La de la derecha ataca con su espada que es la l y 
 
 <img width="464" height="241" alt="image" src="https://github.com/user-attachments/assets/518dfc8e-31cd-4af2-9468-b18273c13ee7" />
 
+
+# Actividad 2
+
+### Experimento 1: Dos cajas y una superficie
+``` js
+
+const {Engine, Body, Bodies, Composite, Render, Runner} = Matter;
+
+let engine
+let render
+
+function setup() {
+  
+  noCanvas();
+  engine = Engine.create();
+  
+  render = Render.create({
+    element: document.body,
+    engine: engine,
+    
+    
+});
+  
+  
+  var boxA = Bodies.rectangle(400, 200, 80, 80);
+var boxB = Bodies.rectangle(450, 50, 80, 80);
+var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+  
+  Composite.add(engine.world, [boxA, boxB, ground]);
+  
+  Render.run(render);
+  
+  var runner = Runner.create();
+
+
+Runner.run(runner, engine);
+}
+
+
+```
+### Link: https://editor.p5js.org/JuanSMarin2/sketches/QK8ZvURWG
+<img width="231" height="296" alt="image" src="https://github.com/user-attachments/assets/77580a01-f061-41c0-b014-88907881df7a" />
+
+
+### Experimento 2: Con p5.js
+
+``` js
+const { Engine, Body, Bodies, Composite } = Matter;
+
+let engine, ground, boxes = [];
+
+function setup() {
+  createCanvas(400, 400);
+  engine = Engine.create();
+  ground = new Box(200, 300, 400, 10, true);
+}
+
+function draw() {
+  background(220);
+  Engine.update(engine);
+  boxes.forEach(b => b.display());
+  ground.display();
+}
+
+function mousePressed() {
+  boxes.push(new Box(mouseX, mouseY, 20, 20));
+}
+
+class Box {
+  constructor(x, y, w, h, isStatic = false) {
+    this.w = w;
+    this.h = h;
+    this.body = Bodies.rectangle(x, y, w, h, { isStatic });
+    if (!isStatic) Body.setAngularVelocity(this.body, 0.2);
+    Composite.add(engine.world, this.body);
+  }
+
+  display() {
+    const { x, y } = this.body.position;
+    const { angle } = this.body;
+    push();
+    translate(x, y);
+    rotate(angle);
+    rectMode(CENTER);
+    rect(0, 0, this.w, this.h);
+    pop();
+  }
+}
+
+```
+### Link: https://editor.p5js.org/JuanSMarin2/sketches/dAiOspLZR
+<img width="398" height="396" alt="image" src="https://github.com/user-attachments/assets/84c7ebac-151b-427f-9e09-2457bfcf99d1" />
+<img width="400" height="394" alt="image" src="https://github.com/user-attachments/assets/b8c79792-c32d-4b83-9933-9cc07bd35601" />
+
+## Proporciona tu explicación clara y concisa de los conceptos clave (Engine, World, Bodies, Constraint, MouseConstraint).
+### Engine 
+Es el programa que maneja la simulación de fisicas, es algo asi como unity o el propio p5.
+
+### World
+Es el contenedor de todos los objetos y de todo lo que hay en la simulación, si un cuerpo no esta en el mundo las fisicas no se aplicaran en este.
+
+### Body
+Es un objeto individual en la simulación, puede ser estatico como el suelo y dinamico como una caja que cae.
+
+### Bodies
+Es un contenedor que agrupa tipos especificos de cuerpos con propiedades definidas, como un prefab en Unity.
+
+### Constrain
+Una restricción o unión entre dos cuerpos, como una cuerda
+
+### MouseConstraint
+Permite la interacción permitiendo mover cuerpos con el mouse
+
+## Menciona brevemente cualquier dificultad encontrada al configurar o usar Matter.js inicialmente.
+Fue pasar de la teoria a lo practico, entender como se usan los conceptos y como funcionan realmente en codigo, ChatGPT se me pusó loco por lo que me tocó meterme a la documentación para entender los conceptos y tambien seguí el video para hacer funcionar las simulación.
 
