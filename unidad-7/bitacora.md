@@ -145,3 +145,31 @@ Permite la interacción permitiendo mover cuerpos con el mouse
 ## Menciona brevemente cualquier dificultad encontrada al configurar o usar Matter.js inicialmente.
 Fue pasar de la teoria a lo practico, entender como se usan los conceptos y como funcionan realmente en codigo, ChatGPT se me pusó loco por lo que me tocó meterme a la documentación para entender los conceptos y tambien seguí el video para hacer funcionar las simulación.
 
+
+
+# Apply: Aplicación 🛠
+## Indica claramente la palabra elegida. 
+Battle 
+
+## Explica tu idea conceptual: ¿Cómo la animación física representa el significado de la palabra?
+Viendo los ejemplos del video Words as an Image, me di cuenta de que las animaciones que más me gustaron no solo representaban el comportamiento de la palabra, sino que también aprovechaban las letras para que parecieran lo que la palabra significa.
+Además, noté que las que mejor lograban esto eran las que tenían una letra repetida.
+Por eso escogí la palabra Battle, que significa batalla: las dos t están en un duelo.
+La t de la derecha ataca con su espada (la L) y la t de la izquierda se defiende con su escudo (la a).
+
+## Describe brevemente los aspectos técnicos clave de tu implementación: ¿Cómo formaste las letras con Matter.js? ¿Qué propiedades físicas fueron importantes? ¿Usaste restricciones?
+Utilicé un Constraint para pegar las armas a sus respectivas t.
+<img width="774" height="534" alt="image" src="https://github.com/user-attachments/assets/97b401e2-eca4-41fb-9751-e9eae0a3d405" />
+
+Con un click se puede iniciar el choque: cuando se hace clic, la a y la L empiezan a atraerse para generar el efecto de que están chocando las espadas.
+En el momento en que colisionan, aparece una partícula de colisión, que es una estrella amarilla que crece rápidamente y después se desvanece.
+
+<img width="913" height="629" alt="image" src="https://github.com/user-attachments/assets/d8ae8346-ccf0-440f-89b3-9093aaceced9" />
+<img width="1086" height="746" alt="image" src="https://github.com/user-attachments/assets/fa0dd86c-d7d6-4fd2-947b-036cdbb32c99" />
+
+
+Cuando impactan, las letras se repelen y luego vuelven a su estado natural.
+El movimiento entre los constraints pasa suavemente de la parte izquierda de la t a la derecha para atacar, y viceversa para volver al estado base.
+<img width="926" height="313" alt="image" src="https://github.com/user-attachments/assets/be6ae931-8114-4c20-b828-d6ea6c85dbe3" />
+
+
